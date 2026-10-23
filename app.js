@@ -11,6 +11,8 @@
   const CFG_URL_KEY = 'absensiku_supabase_url';
   const CFG_KEY_KEY = 'absensiku_supabase_key';
   const PDF_INFO_KEY = 'hadirku_pdf_officials';
+  const NOTIF_SETTINGS_KEY = 'hadirku_notif_settings';
+  const NOTIF_SENT_LOG_KEY = 'hadirku_notif_sent_log';
   const CIRCLE_CIRCUMFERENCE = 314.159; // 2 * PI * 50
   const TARGET_WORK_MINUTES = 420; // 7 jam kerja: 07.30 - 14.30 WITA
 
@@ -46,6 +48,10 @@
   const userAvatarContainer = document.getElementById('userAvatarContainer');
   const greetingNameDisplay = document.getElementById('greetingNameDisplay');
   const notificationBtn = document.getElementById('notificationBtn');
+  const notifActiveDot = document.getElementById('notifActiveDot');
+  const pwaHomeBanner = document.getElementById('pwaHomeBanner');
+  const dismissPwaBannerBtn = document.getElementById('dismissPwaBannerBtn');
+  const installPwaBannerBtn = document.getElementById('installPwaBannerBtn');
 
   // Today Circular Ring & Status Card
   const todayFullDateText = document.getElementById('todayFullDateText');
@@ -114,6 +120,10 @@
   const profileNameDisplay = document.getElementById('profileNameDisplay');
   const profileEmailDisplay = document.getElementById('profileEmailDisplay');
   const openConfigBtnProfile = document.getElementById('openConfigBtnProfile');
+  const pwaInstallBtnProfile = document.getElementById('pwaInstallBtnProfile');
+  const pwaStatusTextProfile = document.getElementById('pwaStatusTextProfile');
+  const openNotificationSettingsBtn = document.getElementById('openNotificationSettingsBtn');
+  const notificationStatusTextProfile = document.getElementById('notificationStatusTextProfile');
   const themeToggleBtnProfile = document.getElementById('themeToggleBtnProfile');
   const profileThemeIcon = document.getElementById('profileThemeIcon');
   const profileThemeText = document.getElementById('profileThemeText');
@@ -191,6 +201,18 @@
 
   // Toast Container
   const toastContainer = document.getElementById('toastContainer');
+
+  // Notification Modal Elements
+  const notifModal = document.getElementById('notifModal');
+  const closeNotifModalBtn = document.getElementById('closeNotifModalBtn');
+  const notifPermissionBadge = document.getElementById('notifPermissionBadge');
+  const toggleNotifMasuk = document.getElementById('toggleNotifMasuk');
+  const toggleNotifPulang = document.getElementById('toggleNotifPulang');
+  const testNotifBtn = document.getElementById('testNotifBtn');
+  const saveNotifSettingsBtn = document.getElementById('saveNotifSettingsBtn');
+
+  // PWA Deferred Prompt Holder
+  let deferredPwaPrompt = null;
 
   // --- Utility Helpers ---
   const padZero = (n) => String(n).padStart(2, '0');
@@ -1123,6 +1145,7 @@
       }
 
       showAbsenSuccessModal('masuk', formatTimeAmPm(currentTime));
+      sendSystemNotification('✅ Absen Masuk Tercatat', `Kehadiran masuk Anda tercatat pada ${formatTimeAmPm(currentTime)} WITA.`);
     } catch (err) {
       console.error(err);
       showToast('Gagal Absen Masuk: ' + err.message, 'error');
@@ -1169,6 +1192,7 @@
       Object.assign(today, data);
       confirmPulangModal.classList.add('hidden');
       showAbsenSuccessModal('pulang', formatTimeAmPm(currentTime));
+      sendSystemNotification('👋 Absen Pulang Tercatat', `Kehadiran pulang Anda tercatat pada ${formatTimeAmPm(currentTime)} WITA. Selamat beristirahat!`);
     } catch (err) {
       console.error(err);
       showToast('Gagal Absen Pulang: ' + err.message, 'error');
@@ -1480,6 +1504,265 @@
     }
   };
 
+  // --- PWA & NOTIFIKASI PENGINGAT (Senin - Sabtu, Kecuali Minggu) ---
+  const getSavedNotifSettings = () => {
+    try {
+      const saved = localStorage.getItem(NOTIF_SETTINGS_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return { enabledMasuk: true, enabledPulang: true };
+  };
+
+  const saveNotifSettings = (settings) => {
+    localStorage.setItem(NOTIF_SETTINGS_KEY, JSON.stringify(settings));
+  };
+
+  const updateNotifBadgeUI = () => {
+    if (!('Notification' in window)) {
+      notifPermissionBadge.textContent = 'Tidak Didukung';
+      notifPermissionBadge.className = 'font-bold px-2 py-0.5 rounded-full text-[10px] bg-slate-200 text-slate-600';
+      if (notificationStatusTextProfile) notificationStatusTextProfile.textContent = 'Browser tidak mendukung';
+      return;
+    }
+
+    if (Notification.permission === 'granted') {
+      notifPermissionBadge.textContent = 'Diizinkan';
+      notifPermissionBadge.className = 'font-bold px-2 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-700';
+      if (notificationStatusTextProfile) notificationStatusTextProfile.textContent = 'Aktif (07:15 & 14:30 WITA, Sen-Sab)';
+      if (notifActiveDot) notifActiveDot.classList.remove('hidden');
+    } else if (Notification.permission === 'denied') {
+      notifPermissionBadge.textContent = 'Diblokir';
+      notifPermissionBadge.className = 'font-bold px-2 py-0.5 rounded-full text-[10px] bg-rose-100 text-rose-700';
+      if (notificationStatusTextProfile) notificationStatusTextProfile.textContent = 'Izin notifikasi diblokir di browser';
+      if (notifActiveDot) notifActiveDot.classList.add('hidden');
+    } else {
+      notifPermissionBadge.textContent = 'Belum Diizinkan';
+      notifPermissionBadge.className = 'font-bold px-2 py-0.5 rounded-full text-[10px] bg-amber-100 text-amber-700';
+      if (notificationStatusTextProfile) notificationStatusTextProfile.textContent = 'Klik untuk aktifkan izin notifikasi';
+      if (notifActiveDot) notifActiveDot.classList.remove('hidden');
+    }
+  };
+
+  const requestNotificationPermission = async () => {
+    if (!('Notification' in window)) {
+      showToast('Browser ini tidak mendukung notifikasi sistem', 'error');
+      return false;
+    }
+    try {
+      const perm = await Notification.requestPermission();
+      updateNotifBadgeUI();
+      return perm === 'granted';
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
+  const sendSystemNotification = (title, body) => {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+    const iconUrl = 'icon.svg';
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.ready.then((reg) => {
+        reg.showNotification(title, {
+          body,
+          icon: iconUrl,
+          badge: iconUrl,
+          vibrate: [200, 100, 200]
+        });
+      });
+    } else {
+      try {
+        new Notification(title, {
+          body,
+          icon: iconUrl
+        });
+      } catch (e) {
+        console.warn('Native notification failed:', e);
+      }
+    }
+  };
+
+  // Cek jam absensi otomatis tiap menit (Khusus Senin - Sabtu, Minggu LIBUR)
+  const checkDailyAttendanceReminders = () => {
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0 = Minggu, 1 = Senin, ..., 6 = Sabtu
+
+    // ATURAN USER: Notifikasi untuk hari MINGGU TIDAK PERLU
+    if (dayOfWeek === 0) return;
+
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const todayStr = getTodayDateString();
+    const todayRecord = getTodayRecord();
+
+    const settings = getSavedNotifSettings();
+    let sentLog = {};
+    try {
+      sentLog = JSON.parse(localStorage.getItem(NOTIF_SENT_LOG_KEY) || '{}');
+    } catch (e) {}
+
+    // 1. Pengingat Absen Masuk: 07:15 WITA (15 menit sebelum 07:30)
+    if (settings.enabledMasuk && hours === 7 && minutes >= 15 && minutes <= 29) {
+      const logKey = `${todayStr}_masuk`;
+      if (!sentLog[logKey]) {
+        // Cek apakah sudah absen masuk
+        if (!todayRecord || !todayRecord.clock_in) {
+          sendSystemNotification(
+            '⏰ Pengingat HadirKu: Absen Masuk',
+            'Selamat pagi! Waktu kerja dimulai pukul 07:30 WITA. Jangan lupa absen masuk hari ini.'
+          );
+          sentLog[logKey] = true;
+          localStorage.setItem(NOTIF_SENT_LOG_KEY, JSON.stringify(sentLog));
+        }
+      }
+    }
+
+    // 2. Pengingat Absen Pulang: 14:30 WITA (Saat jam kerja selesai)
+    if (settings.enabledPulang && hours === 14 && minutes >= 30 && minutes <= 45) {
+      const logKey = `${todayStr}_pulang`;
+      if (!sentLog[logKey]) {
+        // Hanya ingatkan jika sudah absen masuk tapi belum absen pulang
+        if (todayRecord && todayRecord.clock_in && !todayRecord.clock_out) {
+          sendSystemNotification(
+            '🔔 Pengingat HadirKu: Waktu Pulang',
+            'Jam kerja 07:30 - 14:30 WITA telah selesai. Jangan lupa absen pulang dan tetap berhati-hati di jalan!'
+          );
+          sentLog[logKey] = true;
+          localStorage.setItem(NOTIF_SENT_LOG_KEY, JSON.stringify(sentLog));
+        }
+      }
+    }
+  };
+
+  const openNotifModal = () => {
+    const settings = getSavedNotifSettings();
+    toggleNotifMasuk.checked = settings.enabledMasuk !== false;
+    toggleNotifPulang.checked = settings.enabledPulang !== false;
+    updateNotifBadgeUI();
+    notifModal.classList.remove('hidden');
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  const closeNotifModal = () => {
+    notifModal.classList.add('hidden');
+  };
+
+  // Event Listeners Notifikasi
+  if (notificationBtn) notificationBtn.addEventListener('click', openNotifModal);
+  if (openNotificationSettingsBtn) openNotificationSettingsBtn.addEventListener('click', openNotifModal);
+  if (closeNotifModalBtn) closeNotifModalBtn.addEventListener('click', closeNotifModal);
+  if (notifModal) {
+    notifModal.addEventListener('click', (e) => {
+      if (e.target === notifModal) closeNotifModal();
+    });
+  }
+
+  if (saveNotifSettingsBtn) {
+    saveNotifSettingsBtn.addEventListener('click', async () => {
+      const permGranted = await requestNotificationPermission();
+      const settings = {
+        enabledMasuk: toggleNotifMasuk.checked,
+        enabledPulang: toggleNotifPulang.checked
+      };
+      saveNotifSettings(settings);
+      updateNotifBadgeUI();
+      closeNotifModal();
+      if (permGranted) {
+        showToast('Pengaturan notifikasi berhasil disimpan!', 'success');
+      } else {
+        showToast('Pengaturan disimpan, mohon izinkan notifikasi di browser Anda', 'info');
+      }
+    });
+  }
+
+  if (testNotifBtn) {
+    testNotifBtn.addEventListener('click', async () => {
+      const permGranted = await requestNotificationPermission();
+      if (permGranted) {
+        sendSystemNotification(
+          '🔔 Tes Notifikasi HadirKu',
+          'Notifikasi berfungsi normal! Pengingat akan berbunyi jam 07:15 & 14:30 WITA (Senin - Sabtu).'
+        );
+        showToast('Notifikasi tes berhasil dikirim!', 'success');
+      } else {
+        showToast('Izin notifikasi belum diberikan atau diblokir browser', 'error');
+      }
+    });
+  }
+
+  // --- PWA Setup & Service Worker Registration ---
+  const setupPWA = () => {
+    // 1. Registrasi Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => {
+            console.log('HadirKu Service Worker terdaftar:', reg.scope);
+          })
+          .catch((err) => {
+            console.error('Service Worker gagal terdaftar:', err);
+          });
+      });
+    }
+
+    // 2. Deteksi apakah sudah terpasang (Standalone mode)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone) {
+      if (pwaStatusTextProfile) pwaStatusTextProfile.textContent = 'Aplikasi sudah terpasang (PWA Aktif)';
+      if (pwaHomeBanner) pwaHomeBanner.classList.add('hidden');
+      return;
+    }
+
+    // 3. Tangkap event beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+
+      // Munculkan banner di Beranda jika belum pernah ditolak di sesi ini
+      const dismissed = sessionStorage.getItem('hadirku_pwa_dismissed');
+      if (!dismissed && pwaHomeBanner) {
+        pwaHomeBanner.classList.remove('hidden');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      if (pwaStatusTextProfile) pwaStatusTextProfile.textContent = 'Siap dipasang ke Layar Utama';
+    });
+
+    const triggerPwaInstall = async () => {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        const { outcome } = await deferredPwaPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showToast('Terima kasih telah memasang HadirKu!', 'success');
+          if (pwaHomeBanner) pwaHomeBanner.classList.add('hidden');
+          if (pwaStatusTextProfile) pwaStatusTextProfile.textContent = 'Aplikasi sudah terpasang';
+        }
+        deferredPwaPrompt = null;
+      } else {
+        // Panduan manual jika prompt belum dipicu browser
+        showToast('Untuk install: buka menu browser (titik 3 di Chrome atau tombol Bagikan di Safari) -> pilih "Tambahkan ke Layar Utama"', 'info');
+      }
+    };
+
+    if (installPwaBannerBtn) installPwaBannerBtn.addEventListener('click', triggerPwaInstall);
+    if (pwaInstallBtnProfile) pwaInstallBtnProfile.addEventListener('click', triggerPwaInstall);
+
+    if (dismissPwaBannerBtn) {
+      dismissPwaBannerBtn.addEventListener('click', () => {
+        if (pwaHomeBanner) pwaHomeBanner.classList.add('hidden');
+        sessionStorage.setItem('hadirku_pwa_dismissed', 'true');
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      showToast('HadirKu siap digunakan dari layar utama Anda!', 'success');
+      if (pwaHomeBanner) pwaHomeBanner.classList.add('hidden');
+      if (pwaStatusTextProfile) pwaStatusTextProfile.textContent = 'Aplikasi sudah terpasang (PWA Aktif)';
+      deferredPwaPrompt = null;
+    });
+  };
+
   // --- Application Initialization ---
   const init = () => {
     const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
@@ -1488,9 +1771,12 @@
     // Live clock & circular progress updates
     setInterval(() => {
       updateCircularTimerAndState();
+      checkDailyAttendanceReminders();
     }, 1000);
 
     initSupabaseClient();
+    setupPWA();
+    updateNotifBadgeUI();
 
     // Fade out splash screen after 1.5s
     setTimeout(() => {
