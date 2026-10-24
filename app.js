@@ -11,6 +11,7 @@
   const CFG_URL_KEY = 'absensiku_supabase_url';
   const CFG_KEY_KEY = 'absensiku_supabase_key';
   const PDF_INFO_KEY = 'hadirku_pdf_officials';
+  const USER_PROFILE_KEY = 'hadirku_user_profile';
   const NOTIF_SETTINGS_KEY = 'hadirku_notif_settings';
   const NOTIF_SENT_LOG_KEY = 'hadirku_notif_sent_log';
   const CIRCLE_CIRCUMFERENCE = 314.159; // 2 * PI * 50
@@ -62,6 +63,7 @@
   const todayCheckOutText = document.getElementById('todayCheckOutText');
   const subPunchInText = document.getElementById('subPunchInText');
   const subTotalHoursText = document.getElementById('subTotalHoursText');
+  const openAjukanIzinBtn = document.getElementById('openAjukanIzinBtn');
 
   // Floating Center FAB
   const centerFabAbsenBtn = document.getElementById('centerFabAbsenBtn');
@@ -103,6 +105,20 @@
   const emptyTasksFullState = document.getElementById('emptyTasksFullState');
   const openAddTaskModalBtn = document.getElementById('openAddTaskModalBtn');
 
+  // Pomodoro & Water Tracker Elements
+  const pomoModeBadge = document.getElementById('pomoModeBadge');
+  const pomoTimerText = document.getElementById('pomoTimerText');
+  const pomoStartPauseBtn = document.getElementById('pomoStartPauseBtn');
+  const pomoPlayIcon = document.getElementById('pomoPlayIcon');
+  const pomoPlayText = document.getElementById('pomoPlayText');
+  const pomoResetBtn = document.getElementById('pomoResetBtn');
+
+  const waterMlText = document.getElementById('waterMlText');
+  const waterGlassesCount = document.getElementById('waterGlassesCount');
+  const waterProgressBar = document.getElementById('waterProgressBar');
+  const addWaterBtn = document.getElementById('addWaterBtn');
+  const resetWaterBtn = document.getElementById('resetWaterBtn');
+
   // History Tab Elements
   const prevMonthBtn = document.getElementById('prevMonthBtn');
   const nextMonthBtn = document.getElementById('nextMonthBtn');
@@ -119,6 +135,7 @@
   const profileAvatarInitial = document.getElementById('profileAvatarInitial');
   const profileNameDisplay = document.getElementById('profileNameDisplay');
   const profileEmailDisplay = document.getElementById('profileEmailDisplay');
+  const openEditProfileBtn = document.getElementById('openEditProfileBtn');
   const openConfigBtnProfile = document.getElementById('openConfigBtnProfile');
   const pwaInstallBtnProfile = document.getElementById('pwaInstallBtnProfile');
   const pwaStatusTextProfile = document.getElementById('pwaStatusTextProfile');
@@ -201,6 +218,22 @@
 
   // Toast Container
   const toastContainer = document.getElementById('toastContainer');
+
+  // Modal: Ajukan Izin / Sakit
+  const ajukanIzinModal = document.getElementById('ajukanIzinModal');
+  const closeAjukanIzinModalBtn = document.getElementById('closeAjukanIzinModalBtn');
+  const cancelAjukanIzinBtn = document.getElementById('cancelAjukanIzinBtn');
+  const ajukanIzinForm = document.getElementById('ajukanIzinForm');
+  const izinDateInput = document.getElementById('izinDateInput');
+  const izinKeteranganInput = document.getElementById('izinKeteranganInput');
+
+  // Modal: Edit Profil
+  const editProfileModal = document.getElementById('editProfileModal');
+  const closeEditProfileModalBtn = document.getElementById('closeEditProfileModalBtn');
+  const cancelEditProfileBtn = document.getElementById('cancelEditProfileBtn');
+  const editProfileForm = document.getElementById('editProfileForm');
+  const inputProfileNama = document.getElementById('inputProfileNama');
+  const inputProfileJabatan = document.getElementById('inputProfileJabatan');
 
   // Notification Modal Elements
   const notifModal = document.getElementById('notifModal');
@@ -353,6 +386,26 @@
     bottomNav.classList.add('hidden');
   };
 
+  const getTimeBasedGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour >= 4 && hour < 11) return 'Selamat Pagi';
+    if (hour >= 11 && hour < 15) return 'Selamat Siang';
+    if (hour >= 15 && hour < 18.5) return 'Selamat Sore';
+    return 'Selamat Malam';
+  };
+
+  const getSavedUserProfile = () => {
+    try {
+      const saved = localStorage.getItem(USER_PROFILE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return null;
+  };
+
+  const saveUserProfile = (profile) => {
+    localStorage.setItem(USER_PROFILE_KEY, JSON.stringify(profile));
+  };
+
   const showAppView = () => {
     authSection.classList.add('hidden');
     appSection.classList.remove('hidden');
@@ -360,19 +413,28 @@
 
     if (currentUser) {
       const email = currentUser.email || '';
-      const name = email.split('@')[0];
-      const displayName = name.charAt(0).toUpperCase() + name.slice(1);
-      const initial = displayName.charAt(0);
+      const defaultName = email.split('@')[0];
+      const fallbackDisplay = defaultName.charAt(0).toUpperCase() + defaultName.slice(1);
 
-      greetingNameDisplay.textContent = `Good Morning, ${displayName}!`;
+      const savedProfile = getSavedUserProfile() || {};
+      const finalName = savedProfile.nama || fallbackDisplay;
+      const finalJabatan = savedProfile.jabatan || 'Penata Layanan Operasional';
+
+      const initial = finalName.charAt(0).toUpperCase() || 'U';
+      const greetingWord = getTimeBasedGreeting();
+
+      greetingNameDisplay.textContent = `${greetingWord}, ${finalName}!`;
       userAvatarContainer.textContent = initial;
       profileAvatarInitial.textContent = initial;
-      profileNameDisplay.textContent = displayName;
-      profileEmailDisplay.textContent = email;
+      profileNameDisplay.textContent = finalName;
+      profileEmailDisplay.textContent = finalJabatan;
 
       // Pre-fill user name into PDF modal if empty
       if (!pdfNamaPegawai.value) {
-        pdfNamaPegawai.value = displayName;
+        pdfNamaPegawai.value = finalName;
+      }
+      if (!pdfJabatanPegawai.value) {
+        pdfJabatanPegawai.value = finalJabatan;
       }
     }
   };
@@ -536,7 +598,34 @@
     const today = getTodayRecord();
     todayFullDateText.textContent = formatDisplayDateLong(new Date());
 
-    if (!today || !today.clock_in) {
+    // Update greeting name dynamically
+    if (currentUser) {
+      const savedProfile = getSavedUserProfile() || {};
+      const finalName = savedProfile.nama || currentUser.email.split('@')[0];
+      greetingNameDisplay.textContent = `${getTimeBasedGreeting()}, ${finalName}!`;
+    }
+
+    if (today && (today.status === 'Izin' || today.status === 'Sakit')) {
+      // Kasus status Izin atau Sakit
+      const isSakit = today.status === 'Sakit';
+      todayStatusBadge.textContent = isSakit ? 'Sakit (Izin)' : 'Izin Tidak Hadir';
+      todayStatusBadge.className = isSakit
+        ? 'text-xs px-3 py-1 rounded-full font-bold bg-rose-50 text-rose-700 border border-rose-200'
+        : 'text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-200';
+      
+      todayCheckInText.textContent = '-';
+      todayCheckOutText.textContent = '-';
+      subPunchInText.textContent = today.status;
+      subTotalHoursText.textContent = '00:00';
+      circularWorkedTime.textContent = today.status;
+
+      circularProgressArc.style.strokeDashoffset = CIRCLE_CIRCUMFERENCE;
+      timelineTimeMasuk.textContent = '-';
+      timelineDotMasuk.className = 'timeline-dot -left-6 absolute top-1 bg-amber-400';
+      timelineTimePulang.textContent = '-';
+      timelineDotPulang.className = 'timeline-dot -left-6 absolute top-1 bg-amber-400';
+
+    } else if (!today || !today.clock_in) {
       // 1. Belum Absen
       todayStatusBadge.textContent = 'Belum Absen';
       todayStatusBadge.className = 'text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-200';
@@ -557,8 +646,11 @@
 
     } else if (today.clock_in && !today.clock_out) {
       // 2. Sedang Bekerja (Live Timer berjalan terhadap target 7 jam)
-      todayStatusBadge.textContent = 'Sedang Bekerja';
-      todayStatusBadge.className = 'text-xs px-3 py-1 rounded-full font-bold bg-emerald-50 text-[#16A34A] border border-emerald-200';
+      const isLate = today.status === 'Terlambat';
+      todayStatusBadge.textContent = isLate ? 'Bekerja (Terlambat)' : 'Sedang Bekerja';
+      todayStatusBadge.className = isLate
+        ? 'text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-300'
+        : 'text-xs px-3 py-1 rounded-full font-bold bg-emerald-50 text-[#16A34A] border border-emerald-200';
       
       const checkInAmPm = formatTimeAmPm(today.clock_in);
       todayCheckInText.textContent = checkInAmPm;
@@ -567,7 +659,9 @@
 
       // Timeline
       timelineTimeMasuk.textContent = checkInAmPm;
-      timelineDotMasuk.className = 'timeline-dot -left-6 absolute top-1 bg-[#16A34A] border-white shadow-[0_0_8px_rgba(22,163,74,0.5)]';
+      timelineDotMasuk.className = isLate
+        ? 'timeline-dot -left-6 absolute top-1 bg-amber-500 border-white shadow-[0_0_8px_rgba(245,158,11,0.5)]'
+        : 'timeline-dot -left-6 absolute top-1 bg-[#16A34A] border-white shadow-[0_0_8px_rgba(22,163,74,0.5)]';
       timelineTimePulang.textContent = '--:--';
       timelineDotPulang.className = 'timeline-dot -left-6 absolute top-1 bg-slate-300';
 
@@ -585,8 +679,11 @@
 
     } else if (today.clock_in && today.clock_out) {
       // 3. Selesai Bekerja
-      todayStatusBadge.textContent = 'Selesai';
-      todayStatusBadge.className = 'text-xs px-3 py-1 rounded-full font-bold bg-slate-100 text-[#142D4E] border border-slate-200';
+      const isLate = today.status === 'Terlambat';
+      todayStatusBadge.textContent = isLate ? 'Selesai (Terlambat)' : 'Selesai';
+      todayStatusBadge.className = isLate
+        ? 'text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-200'
+        : 'text-xs px-3 py-1 rounded-full font-bold bg-slate-100 text-[#142D4E] border border-slate-200';
 
       const checkInAmPm = formatTimeAmPm(today.clock_in);
       const checkOutAmPm = formatTimeAmPm(today.clock_out);
@@ -960,6 +1057,150 @@
     }
   });
 
+  // --- WIDGET PRODUKTIVITAS: POMODORO & WATER TRACKER ---
+  const POMO_WORK_SECONDS = 25 * 60; // 25 Menit
+  const POMO_BREAK_SECONDS = 5 * 60; // 5 Menit
+  let pomoTimeLeft = POMO_WORK_SECONDS;
+  let pomoIsRunning = false;
+  let pomoIsBreak = false;
+  let pomoInterval = null;
+
+  const updatePomoDisplay = () => {
+    const mins = Math.floor(pomoTimeLeft / 60);
+    const secs = pomoTimeLeft % 60;
+    if (pomoTimerText) pomoTimerText.textContent = `${padZero(mins)}:${padZero(secs)}`;
+
+    if (pomoModeBadge) {
+      if (pomoIsBreak) {
+        pomoModeBadge.textContent = 'Istirahat 5m';
+        pomoModeBadge.className = 'text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200';
+      } else {
+        pomoModeBadge.textContent = 'Fokus 25m';
+        pomoModeBadge.className = 'text-[9px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200';
+      }
+    }
+
+    if (pomoPlayText) pomoPlayText.textContent = pomoIsRunning ? 'Jeda' : 'Mulai';
+    if (pomoPlayIcon) {
+      pomoPlayIcon.setAttribute('data-lucide', pomoIsRunning ? 'pause' : 'play');
+      if (window.lucide) window.lucide.createIcons();
+    }
+  };
+
+  const startPomoTimer = () => {
+    pomoIsRunning = true;
+    updatePomoDisplay();
+
+    pomoInterval = setInterval(() => {
+      if (pomoTimeLeft > 0) {
+        pomoTimeLeft--;
+        updatePomoDisplay();
+      } else {
+        // Waktu habis
+        clearInterval(pomoInterval);
+        pomoIsRunning = false;
+
+        if (!pomoIsBreak) {
+          // Selesai Sesi Fokus -> Ganti ke Istirahat
+          pomoIsBreak = true;
+          pomoTimeLeft = POMO_BREAK_SECONDS;
+          sendSystemNotification('🍅 Pomodoro Selesai!', 'Kerja fokus 25 menit selesai! Saatnya istirahat santai 5 menit.');
+          showToast('Sesi fokus selesai! Waktunya istirahat 5 menit.', 'success');
+        } else {
+          // Selesai Sesi Istirahat -> Ganti ke Fokus
+          pomoIsBreak = false;
+          pomoTimeLeft = POMO_WORK_SECONDS;
+          sendSystemNotification('⏰ Waktu Istirahat Selesai!', 'Istirahat 5 menit selesai! Siap kembali fokus kerja?');
+          showToast('Istirahat selesai! Mari kembali produktif.', 'info');
+        }
+        updatePomoDisplay();
+      }
+    }, 1000);
+  };
+
+  const pausePomoTimer = () => {
+    pomoIsRunning = false;
+    clearInterval(pomoInterval);
+    updatePomoDisplay();
+  };
+
+  const resetPomoTimer = () => {
+    pomoIsRunning = false;
+    clearInterval(pomoInterval);
+    pomoIsBreak = false;
+    pomoTimeLeft = POMO_WORK_SECONDS;
+    updatePomoDisplay();
+  };
+
+  if (pomoStartPauseBtn) {
+    pomoStartPauseBtn.addEventListener('click', () => {
+      if (pomoIsRunning) {
+        pausePomoTimer();
+      } else {
+        startPomoTimer();
+      }
+    });
+  }
+
+  if (pomoResetBtn) {
+    pomoResetBtn.addEventListener('click', resetPomoTimer);
+  }
+
+  // Water Tracker
+  const WATER_KEY = 'hadirku_water_tracker';
+  const TARGET_WATER_GLASSES = 8;
+  const ML_PER_GLASS = 250;
+
+  const getWaterData = () => {
+    const todayStr = getTodayDateString();
+    try {
+      const saved = JSON.parse(localStorage.getItem(WATER_KEY) || '{}');
+      if (saved.date === todayStr) return saved.glasses || 0;
+    } catch (e) {}
+    return 0;
+  };
+
+  const saveWaterData = (glasses) => {
+    const todayStr = getTodayDateString();
+    localStorage.setItem(WATER_KEY, JSON.stringify({ date: todayStr, glasses }));
+  };
+
+  const renderWaterTracker = () => {
+    const glasses = getWaterData();
+    const ml = glasses * ML_PER_GLASS;
+    const targetMl = TARGET_WATER_GLASSES * ML_PER_GLASS;
+    const percent = Math.min(100, Math.round((glasses / TARGET_WATER_GLASSES) * 100));
+
+    if (waterGlassesCount) waterGlassesCount.textContent = glasses;
+    if (waterMlText) waterMlText.textContent = `${ml}/${targetMl} ml`;
+    if (waterProgressBar) waterProgressBar.style.width = `${percent}%`;
+  };
+
+  if (addWaterBtn) {
+    addWaterBtn.addEventListener('click', () => {
+      let glasses = getWaterData() + 1;
+      saveWaterData(glasses);
+      renderWaterTracker();
+
+      if (glasses === TARGET_WATER_GLASSES) {
+        showToast('Luar biasa! Target minum 8 gelas air hari ini tercapai! 💧🎉', 'success');
+        sendSystemNotification('💧 Target Air Tercapai!', 'Selamat! Target 8 gelas (2.000 ml) air hari ini sudah terpenuhi.');
+      } else {
+        showToast(`Segelas air tercatat! (${glasses}/${TARGET_WATER_GLASSES} gelas)`, 'info');
+      }
+    });
+  }
+
+  if (resetWaterBtn) {
+    resetWaterBtn.addEventListener('click', () => {
+      if (confirm('Reset hitungan air minum hari ini kembali ke 0?')) {
+        saveWaterData(0);
+        renderWaterTracker();
+        showToast('Hitungan air minum direset.', 'info');
+      }
+    });
+  }
+
   // --- 06. RINGKASAN KEHADIRAN BULANAN (Dihitung Nyata dari Data) ---
   const renderMonthlyCalculations = () => {
     const year = currentHistoryPeriod.getFullYear();
@@ -1112,6 +1353,11 @@
     const todayStr = getTodayDateString();
     let today = getTodayRecord();
 
+    if (today && (today.status === 'Izin' || today.status === 'Sakit')) {
+      showToast(`Hari ini Anda tercatat status ${today.status}.`, 'info');
+      return;
+    }
+
     if (today && today.clock_in) {
       showToast('Anda sudah melakukan Absen Masuk hari ini!', 'warning');
       return;
@@ -1119,11 +1365,17 @@
 
     const currentTime = getFormattedCurrentTime();
 
+    // Hitung status: Jam masuk standar 07:30 WITA
+    // Jika lebih dari 07:30:00 -> Terlambat
+    const [h, m] = currentTime.split(':').map(Number);
+    const isLate = (h > 7) || (h === 7 && m > 30);
+    const attendanceStatus = isLate ? 'Terlambat' : 'Hadir';
+
     try {
       const payload = {
         user_id: currentUser.id,
         date: todayStr,
-        status: 'Hadir',
+        status: attendanceStatus,
         clock_in: currentTime,
         clock_out: null,
         duration_minutes: 0,
@@ -1145,7 +1397,11 @@
       }
 
       showAbsenSuccessModal('masuk', formatTimeAmPm(currentTime));
-      sendSystemNotification('✅ Absen Masuk Tercatat', `Kehadiran masuk Anda tercatat pada ${formatTimeAmPm(currentTime)} WITA.`);
+      if (isLate) {
+        sendSystemNotification('⚠️ Absen Masuk (Terlambat)', `Kehadiran tercatat ${formatTimeAmPm(currentTime)} WITA (lewat jam 07:30).`);
+      } else {
+        sendSystemNotification('✅ Absen Masuk Tercatat', `Kehadiran masuk Anda tercatat tepat waktu pada ${formatTimeAmPm(currentTime)} WITA.`);
+      }
     } catch (err) {
       console.error(err);
       showToast('Gagal Absen Masuk: ' + err.message, 'error');
@@ -1471,6 +1727,7 @@
     renderWeeklyCalendar();
     renderTaskProgressAndHomePreview();
     renderMonthlyCalculations();
+    renderWaterTracker();
   };
 
   // --- Initial Auth Check ---
@@ -1658,6 +1915,115 @@
     });
   }
 
+  // --- Handlers: Modal Ajukan Izin / Sakit ---
+  const openAjukanIzinModal = () => {
+    izinDateInput.value = getTodayDateString();
+    izinKeteranganInput.value = '';
+    ajukanIzinModal.classList.remove('hidden');
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  const closeAjukanIzinModal = () => {
+    ajukanIzinModal.classList.add('hidden');
+  };
+
+  if (openAjukanIzinBtn) openAjukanIzinBtn.addEventListener('click', openAjukanIzinModal);
+  if (closeAjukanIzinModalBtn) closeAjukanIzinModalBtn.addEventListener('click', closeAjukanIzinModal);
+  if (cancelAjukanIzinBtn) cancelAjukanIzinBtn.addEventListener('click', closeAjukanIzinModal);
+  if (ajukanIzinModal) {
+    ajukanIzinModal.addEventListener('click', (e) => {
+      if (e.target === ajukanIzinModal) closeAjukanIzinModal();
+    });
+  }
+
+  if (ajukanIzinForm) {
+    ajukanIzinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const selectedType = document.querySelector('input[name="izinType"]:checked')?.value || 'Izin';
+      const targetDate = izinDateInput.value;
+      const keterangan = izinKeteranganInput.value.trim();
+
+      try {
+        const payload = {
+          user_id: currentUser.id,
+          date: targetDate,
+          status: selectedType,
+          clock_in: null,
+          clock_out: null,
+          duration_minutes: 0,
+          notes: keterangan,
+          updated_at: new Date().toISOString()
+        };
+
+        const { data, error } = await supabase
+          .from('attendance')
+          .upsert(payload, { onConflict: 'user_id,date' })
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        const existingIdx = records.findIndex((r) => r.date === targetDate);
+        if (existingIdx >= 0) {
+          records[existingIdx] = data;
+        } else {
+          records.unshift(data);
+        }
+
+        closeAjukanIzinModal();
+        renderAll();
+        showToast(`Status ${selectedType} berhasil dicatat!`, 'success');
+        sendSystemNotification(`Status ${selectedType} Dicatat`, `Tanggal ${targetDate} tercatat sebagai ${selectedType}.`);
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal menyimpan izin: ' + err.message, 'error');
+      }
+    });
+  }
+
+  // --- Handlers: Modal Edit Profil ---
+  const openEditProfileModal = () => {
+    const saved = getSavedUserProfile() || {};
+    const defaultName = currentUser?.email ? currentUser.email.split('@')[0] : '';
+    inputProfileNama.value = saved.nama || defaultName;
+    inputProfileJabatan.value = saved.jabatan || 'Penata Layanan Operasional';
+    editProfileModal.classList.remove('hidden');
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  const closeEditProfileModal = () => {
+    editProfileModal.classList.add('hidden');
+  };
+
+  if (openEditProfileBtn) openEditProfileBtn.addEventListener('click', openEditProfileModal);
+  if (closeEditProfileModalBtn) closeEditProfileModalBtn.addEventListener('click', closeEditProfileModal);
+  if (cancelEditProfileBtn) cancelEditProfileBtn.addEventListener('click', closeEditProfileModal);
+  if (editProfileModal) {
+    editProfileModal.addEventListener('click', (e) => {
+      if (e.target === editProfileModal) closeEditProfileModal();
+    });
+  }
+
+  if (editProfileForm) {
+    editProfileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nama = inputProfileNama.value.trim();
+      const jabatan = inputProfileJabatan.value.trim();
+
+      if (!nama) {
+        showToast('Nama tidak boleh kosong!', 'warning');
+        return;
+      }
+
+      saveUserProfile({ nama, jabatan });
+      showAppView();
+      closeEditProfileModal();
+      showToast('Profil pengguna berhasil diperbarui!', 'success');
+    });
+  }
+
   if (saveNotifSettingsBtn) {
     saveNotifSettingsBtn.addEventListener('click', async () => {
       const permGranted = await requestNotificationPermission();
@@ -1777,6 +2143,8 @@
     initSupabaseClient();
     setupPWA();
     updateNotifBadgeUI();
+    updatePomoDisplay();
+    renderWaterTracker();
 
     // Fade out splash screen after 1.5s
     setTimeout(() => {
