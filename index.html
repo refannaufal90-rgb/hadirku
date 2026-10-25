@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="HadirKu - Absensi Mudah, Kerja Lebih Bermakna" />
-  <meta name="theme-color" content="#168C85" />
+  <meta name="theme-color" content="#6CB1C9" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>HadirKu - Absensi Mudah, Kerja Lebih Bermakna</title>
@@ -30,16 +30,16 @@
         extend: {
           colors: {
             hadir: {
-              navy: '#142D4E',
-              teal: '#168C85',
-              accent: '#14BBA6',
-              'teal-light': '#E6F7F6',
-              success: '#16845B',
-              danger: '#DC4545',
-              warning: '#F59E0B',
-              bg: '#F5F7FA',
-              dark: '#172B4D',
-              muted: '#64748B'
+              navy: '#1E3A4C',
+              teal: '#6CB1C9',
+              accent: '#86C7DE',
+              'teal-light': '#E8F5F9',
+              success: '#6CB1C9',
+              danger: '#C25B4A',
+              warning: '#FFDEAA',
+              bg: '#F6F9FA',
+              dark: '#1E3A4C',
+              muted: '#6A8696'
             }
           }
         }
@@ -57,80 +57,131 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-[#F5F7FA] text-[#172B4D] min-h-screen flex flex-col font-sans antialiased selection:bg-[#168C85] selection:text-white pb-28 transition-colors">
+<body class="bg-[#F6F9FA] text-[#1E3A4C] min-h-screen flex flex-col font-sans antialiased selection:bg-[#6CB1C9] selection:text-white pb-28 transition-colors">
 
   <!-- ========================================== -->
-  <!-- 1. SPLASH SCREEN (Dengan Aset Gambar)      -->
+  <!-- 1. SPLASH / ONBOARDING SCREEN (Gaya Lura)   -->
   <!-- ========================================== -->
-  <div id="splashScreen" class="fixed inset-0 z-50 bg-[#142D4E] flex flex-col items-center justify-center p-6 text-white transition-opacity duration-500 overflow-hidden">
-    <div class="max-w-xs w-full flex flex-col items-center text-center space-y-4 animate-pop-in">
-      <!-- Splash Image Container (Bisa diganti fotonya di assets/splash.svg / splash.png) -->
-      <div class="w-full max-w-[260px] rounded-3xl overflow-hidden shadow-2xl">
-        <img 
-          id="splashImageEl" 
-          src="splash.svg" 
-          alt="HadirKu Splash" 
-          class="w-full h-auto object-contain rounded-3xl"
-          onerror="this.src='icon.svg';"
-        />
+  <div id="splashScreen" class="fixed inset-0 z-50 bg-[#F6F9FA] flex flex-col justify-between p-6 sm:p-8 text-[#1E3A4C] transition-opacity duration-500 overflow-hidden">
+    <!-- Top Decorative Organics Blob Background -->
+    <div class="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-[#E8F5F9] blur-2xl pointer-events-none opacity-80"></div>
+    <div class="absolute top-1/4 -left-12 w-40 h-40 rounded-full bg-[#FFF6E5] blur-xl pointer-events-none opacity-70"></div>
+
+    <!-- Top Brand Header -->
+    <div class="relative z-10 pt-4 flex items-center justify-center gap-2">
+      <div class="w-8 h-8 rounded-2xl bg-[#6CB1C9] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+        <i data-lucide="check" class="w-4 h-4"></i>
       </div>
-      <div class="flex items-center gap-2 pt-2">
-        <div class="w-4 h-4 border-2 border-[#14BBA6] border-t-transparent rounded-full animate-spin"></div>
-        <span class="text-xs text-slate-300 font-medium">Memuat HadirKu...</span>
+      <span class="text-xl font-extrabold tracking-tight text-[#1E3A4C]">HadirKu</span>
+    </div>
+
+    <!-- Center Hero Illustration & Headline -->
+    <div class="relative z-10 max-w-xs mx-auto w-full flex flex-col items-center text-center space-y-4 my-auto animate-pop-in">
+      <!-- Organic Nature SVG Illustration (Gaya Lura Sun & Leaves) -->
+      <div class="relative w-44 h-44 flex items-center justify-center">
+        <!-- Sun Yellow Circle -->
+        <div class="absolute w-24 h-24 rounded-full bg-[#FFDEAA] flex items-center justify-center shadow-lg shadow-[#FFDEAA]/20">
+          <div class="flex gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#1E3A4C]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-[#1E3A4C]"></span>
+          </div>
+        </div>
+        <!-- Floating Heart Accent -->
+        <div class="absolute top-3 right-5 text-rose-400 animate-pulse text-lg">❤️</div>
+        <!-- Leaves SVG In Front -->
+        <svg class="absolute bottom-0 w-36 h-28 pointer-events-none" viewBox="0 0 160 120" fill="none">
+          <path d="M40 110C30 70 55 35 85 45C95 65 75 105 40 110Z" fill="#6CB1C9"/>
+          <path d="M120 110C130 75 110 40 85 50C75 70 95 105 120 110Z" fill="#86C7DE"/>
+          <path d="M75 115C60 90 70 70 85 65C100 80 95 105 75 115Z" fill="#1E3A4C" opacity="0.9"/>
+        </svg>
       </div>
+
+      <div class="space-y-2 pt-2">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#1E3A4C] tracking-tight leading-tight">
+          Absensi Mudah,<br><span class="text-[#6CB1C9]">Kerja Bermakna.</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-[#6A8696] font-medium leading-relaxed max-w-[250px] mx-auto">
+          Catat kehadiran harian, pantau waktu kerja, dan raih target tugas dengan tenang.
+        </p>
+      </div>
+
+      <!-- Loading Spinner for Auto-login Check -->
+      <div id="splashLoadingIndicator" class="flex items-center gap-2 pt-1 text-xs text-[#6A8696]">
+        <div class="w-3.5 h-3.5 border-2 border-[#6CB1C9] border-t-transparent rounded-full animate-spin"></div>
+        <span>Memeriksa sesi...</span>
+      </div>
+    </div>
+
+    <!-- Bottom Actions: Get Started & Sign In -->
+    <div class="relative z-10 max-w-xs mx-auto w-full pb-4 space-y-3">
+      <button 
+        id="splashGetStartedBtn" 
+        type="button" 
+        class="w-full py-4 px-6 rounded-2xl bg-[#6CB1C9] hover:bg-[#5AA1B9] active:scale-[0.98] text-white font-extrabold text-sm shadow-lg shadow-[#6CB1C9]/25 flex items-center justify-center gap-2 transition"
+      >
+        <span>Get started</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+
+      <p class="text-center text-xs text-[#6A8696]">
+        Already have an account? 
+        <button id="splashSignInBtn" type="button" class="font-extrabold text-[#1E3A4C] hover:text-[#6CB1C9] underline underline-offset-2 transition">
+          Sign in
+        </button>
+      </p>
     </div>
   </div>
 
   <!-- ========================================== -->
   <!-- 2. LOGIN SCREEN                            -->
   <!-- ========================================== -->
-  <div id="authSection" class="hidden min-h-screen flex flex-col justify-between py-10 px-6 max-w-md w-full mx-auto">
+  <div id="authSection" class="hidden min-h-screen flex flex-col justify-between py-8 px-6 max-w-md w-full mx-auto">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-xl bg-[#168C85] flex items-center justify-center text-white font-bold text-sm">
-          <i data-lucide="check" class="w-5 h-5"></i>
+        <div class="w-8 h-8 rounded-2xl bg-[#6CB1C9] flex items-center justify-center text-white font-bold text-sm shadow-sm">
+          <i data-lucide="check" class="w-4 h-4"></i>
         </div>
-        <span class="font-extrabold text-lg text-[#142D4E]">HadirKu</span>
+        <span class="font-extrabold text-lg text-[#1E3A4C]">HadirKu</span>
       </div>
-      <button id="openConfigBtnAuth" type="button" class="text-xs text-[#168C85] font-semibold bg-[#E6F7F6] px-3 py-1.5 rounded-xl border border-[#168C85]/20 flex items-center gap-1.5" title="Pengaturan Supabase">
+      <button id="openConfigBtnAuth" type="button" class="text-xs text-[#6CB1C9] font-semibold bg-[#E8F5F9] px-3 py-1.5 rounded-xl border border-[#6CB1C9]/20 flex items-center gap-1.5" title="Pengaturan Supabase">
         <i data-lucide="database" class="w-3.5 h-3.5"></i>
         <span>Database</span>
       </button>
     </div>
 
-    <div class="my-auto py-8 space-y-6">
+    <div class="my-auto py-6 space-y-5">
       <div class="text-center space-y-1.5">
-        <div class="w-16 h-16 mx-auto rounded-3xl bg-[#E6F7F6] text-[#168C85] flex items-center justify-center mb-4 shadow-sm">
+        <div class="w-16 h-16 mx-auto rounded-3xl bg-[#E8F5F9] text-[#6CB1C9] flex items-center justify-center mb-3 shadow-sm border border-[#E2ECF0]">
           <i data-lucide="user-check" class="w-8 h-8"></i>
         </div>
-        <h2 class="text-2xl font-extrabold text-[#142D4E]">Selamat datang!</h2>
-        <p class="text-xs text-[#64748B]">Silakan masuk untuk melanjutkan absensi</p>
+        <h2 class="text-2xl font-extrabold text-[#1E3A4C]">Selamat datang!</h2>
+        <p class="text-xs text-[#6A8696]">Silakan masuk untuk melanjutkan absensi</p>
       </div>
 
       <!-- Auth Switcher Tabs -->
-      <div class="flex rounded-xl bg-slate-200/70 p-1 text-xs font-semibold">
-        <button id="tabLoginBtn" type="button" class="flex-1 py-2.5 rounded-lg bg-white text-[#142D4E] shadow-sm font-bold transition">
+      <div class="flex rounded-2xl bg-[#E8F5F9]/80 p-1 text-xs font-semibold border border-[#E2ECF0]">
+        <button id="tabLoginBtn" type="button" class="flex-1 py-2.5 rounded-xl bg-white text-[#1E3A4C] shadow-sm font-bold transition">
           Masuk
         </button>
-        <button id="tabRegisterBtn" type="button" class="flex-1 py-2.5 rounded-lg text-[#64748B] hover:text-[#142D4E] transition">
+        <button id="tabRegisterBtn" type="button" class="flex-1 py-2.5 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] transition">
           Daftar Akun Baru
         </button>
       </div>
 
       <form id="authForm" class="space-y-4">
         <div>
-          <label for="authEmail" class="block text-xs font-semibold text-[#172B4D] mb-1.5">Username / Email:</label>
+          <label for="authEmail" class="block text-xs font-semibold text-[#1E3A4C] mb-1.5">Username / Email:</label>
           <input 
             type="email" 
             id="authEmail" 
             required 
             placeholder="Masukkan username atau email" 
-            class="w-full bg-white border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#172B4D] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#168C85] focus:border-transparent transition"
+            class="w-full bg-[#FFFFFF] border border-[#E2ECF0] rounded-2xl px-4 py-3 text-sm text-[#1E3A4C] placeholder-[#6A8696]/60 focus:outline-none focus:ring-2 focus:ring-[#6CB1C9] focus:border-transparent transition"
           />
         </div>
 
         <div>
-          <label for="authPassword" class="block text-xs font-semibold text-[#172B4D] mb-1.5">Password:</label>
+          <label for="authPassword" class="block text-xs font-semibold text-[#1E3A4C] mb-1.5">Password:</label>
           <div class="relative">
             <input 
               type="password" 
@@ -138,9 +189,9 @@
               required 
               minlength="6"
               placeholder="Masukkan password" 
-              class="w-full bg-white border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#172B4D] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#168C85] focus:border-transparent transition pr-10"
+              class="w-full bg-[#FFFFFF] border border-[#E2ECF0] rounded-2xl px-4 py-3 text-sm text-[#1E3A4C] placeholder-[#6A8696]/60 focus:outline-none focus:ring-2 focus:ring-[#6CB1C9] focus:border-transparent transition pr-10"
             />
-            <button type="button" id="togglePasswordBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+            <button type="button" id="togglePasswordBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#6A8696] hover:text-[#1E3A4C] p-1">
               <i data-lucide="eye" class="w-4 h-4"></i>
             </button>
           </div>
@@ -149,7 +200,7 @@
         <button 
           id="authSubmitBtn" 
           type="submit" 
-          class="w-full h-12 rounded-xl font-bold text-sm text-white bg-[#142D4E] hover:bg-[#0F172A] active:scale-[0.98] shadow-lg shadow-[#142D4E]/20 transition flex items-center justify-center gap-2"
+          class="w-full h-12 rounded-2xl font-bold text-sm text-white bg-[#6CB1C9] hover:bg-[#5AA1B9] active:scale-[0.98] shadow-lg shadow-[#6CB1C9]/25 transition flex items-center justify-center gap-2"
         >
           <i data-lucide="log-in" class="w-4 h-4"></i>
           <span id="authSubmitText">Masuk</span>
@@ -157,7 +208,7 @@
       </form>
     </div>
 
-    <div class="text-center text-xs text-[#64748B]">
+    <div class="text-center text-xs text-[#6A8696]">
       HadirKu &copy; 2026 &bull; Absensi Mudah, Kerja Lebih Bermakna
     </div>
   </div>
@@ -172,127 +223,184 @@
     <!-- ======================================================== -->
     <div id="tabContentHome" class="space-y-4 animate-pop-in">
       
-      <!-- 01. HEADER & SAMBUTAN -->
-      <div class="p-4 rounded-3xl bg-gradient-to-r from-[#0F766E] to-[#14BBA6] text-white shadow-lg shadow-[#0F766E]/20 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div id="userAvatarContainer" class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+      <!-- 01. HEADER & SAMBUTAN (Gaya Daylight "You're doing well") -->
+      <div class="relative p-5 rounded-3xl bg-gradient-to-br from-[#E8F5F9] via-[#F6F9FA] to-[#FFF6E5] border border-[#E2ECF0] shadow-sm overflow-hidden flex items-center justify-between">
+        <!-- Background Organic Blob & Sun SVG Decoration -->
+        <div class="absolute -right-6 -bottom-8 w-32 h-32 rounded-full bg-[#86C7DE]/20 blur-xl pointer-events-none"></div>
+        <div class="absolute right-14 top-3 w-7 h-7 rounded-full bg-[#FFDEAA]/30 blur-xs pointer-events-none"></div>
+
+        <!-- Plant Leaf Illustration Accent -->
+        <svg class="absolute right-12 bottom-0 w-16 h-16 pointer-events-none opacity-40" viewBox="0 0 100 100" fill="none">
+          <path d="M50 90C40 60 55 30 75 25C80 45 65 75 50 90Z" fill="#6CB1C9"/>
+          <path d="M50 90C35 70 30 45 40 35C55 45 50 75 50 90Z" fill="#86C7DE"/>
+        </svg>
+
+        <div class="relative z-10 flex items-center gap-3.5">
+          <div id="userAvatarContainer" class="w-12 h-12 rounded-2xl bg-[#6CB1C9] text-white flex items-center justify-center font-extrabold text-lg shadow-md shadow-[#6CB1C9]/20 border-2 border-white flex-shrink-0">
             J
           </div>
           <div>
-            <h2 id="greetingNameDisplay" class="text-base font-extrabold leading-tight">Good Morning, John!</h2>
-            <p class="text-xs text-teal-100 font-medium">Semangat untuk hari yang produktif!</p>
+            <span id="greetingTimeWord" class="text-[11px] font-bold text-[#6A8696] uppercase tracking-wider block">Selamat Pagi,</span>
+            <h2 id="greetingNameDisplay" class="text-lg font-extrabold leading-tight text-[#1E3A4C] flex items-center gap-1.5">
+              <span>John Doe</span>
+              <span class="text-xs text-[#FFDEAA]">✨</span>
+            </h2>
+            <p id="greetingSubQuote" class="text-xs text-[#6CB1C9] font-semibold mt-0.5">You're doing well</p>
           </div>
         </div>
 
-        <button id="notificationBtn" type="button" class="w-10 h-10 rounded-2xl bg-white/15 hover:bg-white/25 border border-white/20 text-white flex items-center justify-center relative transition">
-          <i data-lucide="bell" class="w-4 h-4"></i>
-          <span id="notifActiveDot" class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-amber-300"></span>
+        <button id="notificationBtn" type="button" class="relative z-10 w-10 h-10 rounded-2xl bg-[#FFFFFF] hover:bg-[#E8F5F9] border border-[#E2ECF0] text-[#1E3A4C] flex items-center justify-center shadow-xs transition">
+          <i data-lucide="bell" class="w-4 h-4 text-[#6CB1C9]"></i>
+          <span id="notifActiveDot" class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#FFDEAA]"></span>
         </button>
       </div>
 
       <!-- PWA INSTALL BANNER (Hanya muncul jika belum diinstall) -->
-      <div id="pwaHomeBanner" class="hidden p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-[#168C85] text-white shadow-md flex items-center justify-between gap-3 animate-pop-in">
+      <div id="pwaHomeBanner" class="hidden p-3.5 rounded-2xl bg-gradient-to-r from-[#6CB1C9] to-[#1E3A4C] text-white shadow-md flex items-center justify-between gap-3 animate-pop-in">
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-white flex-shrink-0">
             <i data-lucide="smartphone" class="w-5 h-5"></i>
           </div>
           <div>
             <p class="text-xs font-bold leading-tight">Pasang HadirKu di Layar Utama</p>
-            <p class="text-[11px] text-teal-100">Akses cepat tanpa browser bar</p>
+            <p class="text-[11px] text-emerald-100">Akses cepat tanpa browser bar</p>
           </div>
         </div>
         <div class="flex items-center gap-1.5 flex-shrink-0">
           <button id="dismissPwaBannerBtn" type="button" class="p-1.5 text-white/70 hover:text-white text-xs">Nanti</button>
-          <button id="installPwaBannerBtn" type="button" class="px-3 py-1.5 rounded-xl bg-white text-[#142D4E] font-bold text-xs shadow-sm hover:bg-teal-50 active:scale-95 transition">Pasang</button>
+          <button id="installPwaBannerBtn" type="button" class="px-3 py-1.5 rounded-xl bg-[#FFFFFF] text-[#1E3A4C] font-bold text-xs shadow-sm hover:bg-[#E8F5F9] active:scale-95 transition">Pasang</button>
         </div>
       </div>
 
-      <!-- 02. TODAY'S STATUS & LINGKARAN JAM KERJA (Target 7 Jam: 07.30 - 14.30 WITA) -->
-      <div class="hadirku-card p-5 space-y-4">
-        <div class="flex items-center justify-between">
+      <!-- 02. TODAY'S STATUS & LINGKARAN JAM KERJA (Gaya DAYLIGHT 73% Daily Balance) -->
+      <div class="hadirku-card relative p-5 space-y-4 overflow-hidden border border-[#E2ECF0]">
+        <!-- Soft Background Gradient & Sun Blob (Daylight style) -->
+        <div class="absolute -top-10 -right-10 w-44 h-44 rounded-full bg-[#E8F5F9] blur-2xl pointer-events-none opacity-80"></div>
+        <div class="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-[#FFF6E5] blur-xl pointer-events-none opacity-70"></div>
+
+        <!-- Header Bar: Date & Status Badge -->
+        <div class="relative z-10 flex items-center justify-between">
           <div>
-            <span class="text-xs font-bold text-[#142D4E] block">Hari Ini</span>
-            <span id="todayFullDateText" class="text-[11px] text-[#64748B] font-medium">Jumat, 16 Oktober 2026</span>
+            <span class="text-[11px] font-bold text-[#6A8696] uppercase tracking-wider block">Hari Ini</span>
+            <span id="todayFullDateText" class="text-xs text-[#1E3A4C] font-semibold">Jumat, 16 Oktober 2026</span>
           </div>
-          <span id="todayStatusBadge" class="text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-200">
+          <span id="todayStatusBadge" class="text-xs px-3 py-1 rounded-full font-bold bg-[#FFF6E5] text-[#B57F26] border border-[#FFE6BC]">
             Belum Absen
           </span>
         </div>
 
-        <!-- Center: Circular Progress Ring & Check In/Out Times -->
-        <div class="flex items-center justify-between px-2 pt-1">
-          <!-- Check In Column -->
-          <div class="text-center w-20">
-            <span class="text-[11px] text-[#64748B] block font-medium">Check In</span>
-            <span id="todayCheckInText" class="text-xs font-extrabold text-[#142D4E] font-mono mt-0.5 block">07:30 AM</span>
+        <!-- Center Section: Daylight Style (Circular Gauge on Left, Plant Illustration on Right) -->
+        <div class="relative z-10 flex items-center justify-between gap-2 py-1">
+          <!-- Left: Circular Gauge with Percentage & Working Time -->
+          <div class="flex flex-col items-center justify-center flex-1">
+            <div class="relative flex items-center justify-center">
+              <svg class="w-36 h-36" viewBox="0 0 120 120">
+                <!-- Track Ring Background (Light Cream/Sage) -->
+                <circle
+                  class="text-[#E2ECF0]"
+                  stroke-width="9"
+                  stroke="currentColor"
+                  fill="transparent"
+                  r="48"
+                  cx="60"
+                  cy="60"
+                />
+                <!-- Main Progress Arc (Forest Green) -->
+                <circle
+                  id="circularProgressArc"
+                  class="progress-ring__circle text-[#6CB1C9]"
+                  stroke-width="9"
+                  stroke-dasharray="301.59"
+                  stroke-dashoffset="301.59"
+                  stroke-linecap="round"
+                  stroke="currentColor"
+                  fill="transparent"
+                  r="48"
+                  cx="60"
+                  cy="60"
+                />
+              </svg>
+
+              <!-- Center Inside Text: Percentage + Target Duration -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="circularPercentText" class="text-3xl font-extrabold text-[#1E3A4C] font-mono tracking-tight leading-none">0%</span>
+                <span class="text-[10px] text-[#6A8696] font-bold mt-1 uppercase tracking-wide">Target Kerja</span>
+                <span id="circularWorkedTime" class="text-xs font-bold text-[#6CB1C9] font-mono mt-0.5">00:00 <span class="text-[9px] text-[#6A8696]">/ 7h</span></span>
+              </div>
+            </div>
+            
+            <p id="circularSubtitleText" class="text-[11px] text-[#6A8696] font-medium text-center mt-2">
+              Target 07:30 - 14:30 WITA
+            </p>
           </div>
 
-          <!-- Circular Progress Ring (Center: Target 7 Jam) -->
-          <div class="relative flex items-center justify-center">
-            <svg class="w-32 h-32" viewBox="0 0 120 120">
-              <!-- Background Ring -->
-              <circle
-                class="text-slate-100"
-                stroke-width="8"
-                stroke="currentColor"
-                fill="transparent"
-                r="50"
-                cx="60"
-                cy="60"
-              />
-              <!-- Active Progress Arc -->
-              <circle
-                id="circularProgressArc"
-                class="progress-ring__circle text-[#14BBA6]"
-                stroke-width="8"
-                stroke-dasharray="314.159"
-                stroke-dashoffset="314.159"
-                stroke-linecap="round"
-                stroke="currentColor"
-                fill="transparent"
-                r="50"
-                cx="60"
-                cy="60"
-              />
+          <!-- Right: Potted Plant Illustration with "A kinder day lives here" (Daylight Style) -->
+          <div class="flex flex-col items-center justify-center relative w-32 flex-shrink-0">
+            <!-- Floating Sun Sphere in Corner -->
+            <div class="absolute top-0 right-3 w-5 h-5 rounded-full bg-[#FFDEAA] shadow-md shadow-[#FFDEAA]/30"></div>
+
+            <!-- Plant & Ceramic Pot Vector Art -->
+            <svg class="w-24 h-28 pointer-events-none" viewBox="0 0 100 120" fill="none">
+              <!-- Back Leaves (Sage Green) -->
+              <path d="M50 75C35 50 30 20 48 10C55 28 55 55 50 75Z" fill="#86C7DE"/>
+              <path d="M50 75C65 45 75 25 88 20C85 40 70 65 50 75Z" fill="#86C7DE" opacity="0.85"/>
+              <path d="M50 75C25 60 15 35 20 22C35 32 45 55 50 75Z" fill="#86C7DE" opacity="0.85"/>
+
+              <!-- Front Main Leaves (Forest Green) -->
+              <path d="M50 78C42 55 45 28 52 14C58 35 56 60 50 78Z" fill="#6CB1C9"/>
+              <path d="M50 78C30 70 25 50 28 38C40 45 48 65 50 78Z" fill="#6CB1C9"/>
+              <path d="M50 78C70 70 78 48 74 36C65 48 55 68 50 78Z" fill="#6CB1C9"/>
+
+              <!-- Plant Stem -->
+              <line x1="50" y1="50" x2="50" y2="80" stroke="#1E3A4C" stroke-width="2.5" stroke-linecap="round"/>
+
+              <!-- Ceramic Pot Base -->
+              <ellipse cx="50" cy="80" rx="19" ry="4" fill="#E2ECF0"/>
+              <path d="M32 80L36 108C37 112 43 115 50 115C57 115 63 112 64 108L68 80Z" fill="#FFFFFF" stroke="#E2ECF0" stroke-width="2"/>
+              <ellipse cx="50" cy="82" rx="16" ry="2.5" fill="#BF8E68" opacity="0.4"/>
             </svg>
 
-            <!-- Inside Circle Content -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span class="text-[10px] text-[#64748B] font-semibold">Jam Kerja</span>
-              <span id="circularWorkedTime" class="text-lg font-extrabold text-[#142D4E] font-mono leading-none my-0.5">00:00</span>
-              <span class="text-[9px] text-[#64748B] font-medium">/ 7 jam</span>
-            </div>
-          </div>
-
-          <!-- Check Out Column -->
-          <div class="text-center w-20">
-            <span class="text-[11px] text-[#64748B] block font-medium">Check Out</span>
-            <span id="todayCheckOutText" class="text-xs font-extrabold text-[#142D4E] font-mono mt-0.5 block">--:--</span>
+            <!-- Inspirational Note in Script/Italic (Gaya Daylight) -->
+            <p class="text-[10px] text-[#6A8696] italic text-center font-serif leading-tight mt-1">
+              "A calmer day<br>starts here"
+            </p>
           </div>
         </div>
 
-        <!-- 2 Sub-metrics Underneath: Punch In & Total Hours (Istirahat Dihapus) -->
-        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100 text-center">
-          <div class="p-2.5 rounded-xl bg-slate-50">
-            <div class="text-[#168C85] flex items-center justify-center gap-1 mb-0.5">
-              <i data-lucide="clock" class="w-3 h-3"></i>
-              <span class="text-[10px] font-bold uppercase text-[#64748B]">Jam Masuk</span>
+        <!-- 3 Quick Check-in Stats Pill Grid (Masuk, Pulang, Durasi) -->
+        <div class="relative z-10 grid grid-cols-3 gap-2 pt-2 border-t border-[#E2ECF0] text-center">
+          <div class="p-2 rounded-2xl bg-[#E8F5F9]/70 border border-[#E2ECF0]">
+            <div class="text-[#6CB1C9] flex items-center justify-center gap-1 mb-0.5">
+              <i data-lucide="log-in" class="w-3 h-3"></i>
+              <span class="text-[9px] font-bold uppercase text-[#6A8696]">Masuk</span>
             </div>
-            <span id="subPunchInText" class="text-xs font-extrabold text-[#142D4E] font-mono">07:30 AM</span>
+            <span id="todayCheckInText" class="text-xs font-extrabold text-[#1E3A4C] font-mono">07:30 AM</span>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-50">
-            <div class="text-[#14BBA6] flex items-center justify-center gap-1 mb-0.5">
-              <i data-lucide="check-circle" class="w-3 h-3"></i>
-              <span class="text-[10px] font-bold uppercase text-[#64748B]">Total Jam Kerja</span>
+
+          <div class="p-2 rounded-2xl bg-[#E8F5F9]/70 border border-[#E2ECF0]">
+            <div class="text-[#86C7DE] flex items-center justify-center gap-1 mb-0.5">
+              <i data-lucide="log-out" class="w-3 h-3 text-[#6CB1C9]"></i>
+              <span class="text-[9px] font-bold uppercase text-[#6A8696]">Pulang</span>
             </div>
-            <span id="subTotalHoursText" class="text-xs font-extrabold text-[#142D4E] font-mono">00:00</span>
+            <span id="todayCheckOutText" class="text-xs font-extrabold text-[#1E3A4C] font-mono">--:--</span>
+          </div>
+
+          <div class="p-2 rounded-2xl bg-[#FFF6E5] border border-[#FFE6BC]">
+            <div class="text-[#B57F26] flex items-center justify-center gap-1 mb-0.5">
+              <i data-lucide="clock" class="w-3 h-3 text-[#FFDEAA]"></i>
+              <span class="text-[9px] font-bold uppercase text-[#6A8696]">Durasi</span>
+            </div>
+            <span id="subTotalHoursText" class="text-xs font-extrabold text-[#1E3A4C] font-mono">00:00</span>
           </div>
         </div>
+
+        <!-- Hidden compat holder for subPunchInText if needed by other logic -->
+        <span id="subPunchInText" class="hidden">--:--</span>
 
         <!-- Tombol Cepat: Ajukan Izin / Sakit -->
-        <div class="pt-1">
-          <button id="openAjukanIzinBtn" type="button" class="w-full py-2.5 px-3 rounded-2xl bg-amber-50/80 hover:bg-amber-100/80 border border-amber-200/80 text-amber-800 flex items-center justify-center gap-2 text-xs font-bold transition active:scale-[0.99]">
-            <i data-lucide="file-text" class="w-4 h-4 text-amber-600"></i>
+        <div class="relative z-10 pt-1">
+          <button id="openAjukanIzinBtn" type="button" class="w-full py-2.5 px-3 rounded-2xl bg-[#FFF6E5] hover:bg-[#FFE6BC] border border-[#FFE6BC] text-[#B57F26] flex items-center justify-center gap-2 text-xs font-bold transition active:scale-[0.99]">
+            <i data-lucide="file-text" class="w-4 h-4 text-[#FFDEAA]"></i>
             <span>Ajukan Izin atau Sakit Hari Ini</span>
           </button>
         </div>
@@ -301,8 +409,8 @@
       <!-- 04. KALENDER MINGGUAN (Senin s/d Minggu) -->
       <div class="hadirku-card p-4 space-y-2.5">
         <div class="flex items-center justify-between text-xs">
-          <span class="font-bold text-[#142D4E]">Kalender Mingguan</span>
-          <span id="weekRangeLabel" class="text-[11px] text-[#64748B] font-medium">12 - 18 Oktober 2026</span>
+          <span class="font-bold text-[#1E3A4C]">Kalender Mingguan</span>
+          <span id="weekRangeLabel" class="text-[11px] text-[#6A8696] font-medium">12 - 18 Oktober 2026</span>
         </div>
 
         <!-- 7 Days Grid -->
@@ -315,10 +423,10 @@
       <div class="hadirku-card p-5 space-y-3.5">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="text-sm font-bold text-[#142D4E]">Target Task Hari Ini</h3>
-            <span id="homeTaskProgressCount" class="text-xs text-[#64748B]">0 dari 0 tugas selesai</span>
+            <h3 class="text-sm font-bold text-[#1E3A4C]">Target Task Hari Ini</h3>
+            <span id="homeTaskProgressCount" class="text-xs text-[#6A8696]">0 dari 0 tugas selesai</span>
           </div>
-          <button id="homeViewAllTasksLink" type="button" class="text-xs font-bold text-[#168C85] hover:underline flex items-center gap-0.5">
+          <button id="homeViewAllTasksLink" type="button" class="text-xs font-bold text-[#6CB1C9] hover:underline flex items-center gap-0.5">
             <span>Lihat Semua</span>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
           </button>
@@ -326,7 +434,7 @@
 
         <!-- Progress Bar (Teal) -->
         <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-          <div id="homeTaskProgressBar" class="bg-[#14BBA6] h-full w-0 transition-all duration-300"></div>
+          <div id="homeTaskProgressBar" class="bg-[#86C7DE] h-full w-0 transition-all duration-300"></div>
         </div>
 
         <!-- 3 Tasks Preview -->
@@ -338,33 +446,33 @@
       <!-- 06. RINGKASAN KEHADIRAN BULANAN (Dihitung dari data riwayat) -->
       <div class="hadirku-card p-5 space-y-3">
         <div class="flex items-center justify-between text-xs">
-          <span class="font-bold text-[#142D4E]">Ringkasan Bulan Berjalan</span>
-          <span id="homeMonthLabel" class="text-[11px] text-[#64748B] font-medium">Oktober 2026</span>
+          <span class="font-bold text-[#1E3A4C]">Ringkasan Bulan Berjalan</span>
+          <span id="homeMonthLabel" class="text-[11px] text-[#6A8696] font-medium">Oktober 2026</span>
         </div>
 
         <div class="grid grid-cols-4 gap-2 text-center">
           <div class="p-2.5 rounded-2xl bg-emerald-50/60 border border-emerald-100">
-            <span class="text-[10px] text-[#64748B] font-semibold block">Hadir</span>
+            <span class="text-[10px] text-[#6A8696] font-semibold block">Hadir</span>
             <span id="summaryHadirCount" class="text-base font-extrabold text-[#16A34A] block mt-0.5">0</span>
           </div>
           <div class="p-2.5 rounded-2xl bg-amber-50/60 border border-amber-100">
-            <span class="text-[10px] text-[#64748B] font-semibold block">Terlambat</span>
+            <span class="text-[10px] text-[#6A8696] font-semibold block">Terlambat</span>
             <span id="summaryTerlambatCount" class="text-base font-extrabold text-[#F59E0B] block mt-0.5">0</span>
           </div>
           <div class="p-2.5 rounded-2xl bg-sky-50/60 border border-sky-100">
-            <span class="text-[10px] text-[#64748B] font-semibold block">Izin</span>
+            <span class="text-[10px] text-[#6A8696] font-semibold block">Izin</span>
             <span id="summaryIzinCount" class="text-base font-extrabold text-[#0284C7] block mt-0.5">0</span>
           </div>
           <div class="p-2.5 rounded-2xl bg-teal-50/60 border border-teal-100">
-            <span class="text-[10px] text-[#64748B] font-semibold block">Total Jam</span>
-            <span id="summaryTotalHoursCount" class="text-xs font-extrabold text-[#168C85] block mt-1 font-mono">00:00</span>
+            <span class="text-[10px] text-[#6A8696] font-semibold block">Total Jam</span>
+            <span id="summaryTotalHoursCount" class="text-xs font-extrabold text-[#6CB1C9] block mt-1 font-mono">00:00</span>
           </div>
         </div>
       </div>
 
       <!-- 07. AKTIVITAS TERBARU (TIMELINE ABSENSI HARI INI) -->
       <div class="hadirku-card p-5 space-y-3">
-        <h3 class="text-sm font-bold text-[#142D4E]">Aktivitas Hari Ini</h3>
+        <h3 class="text-sm font-bold text-[#1E3A4C]">Aktivitas Hari Ini</h3>
 
         <div class="relative pl-6 space-y-4 pt-1">
           <!-- Timeline Line -->
@@ -374,20 +482,20 @@
           <div class="relative flex items-start justify-between text-xs">
             <div id="timelineDotMasuk" class="timeline-dot -left-6 absolute top-1 bg-slate-300"></div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Absen Masuk</span>
-              <span class="text-[11px] text-[#64748B]">Kehadiran kerja tercatat</span>
+              <span class="font-bold text-[#1E3A4C] block">Absen Masuk</span>
+              <span class="text-[11px] text-[#6A8696]">Kehadiran kerja tercatat</span>
             </div>
-            <span id="timelineTimeMasuk" class="font-mono font-bold text-[#142D4E]">--:--</span>
+            <span id="timelineTimeMasuk" class="font-mono font-bold text-[#1E3A4C]">--:--</span>
           </div>
 
           <!-- Item 2: Absen Pulang -->
           <div class="relative flex items-start justify-between text-xs pt-1">
             <div id="timelineDotPulang" class="timeline-dot -left-6 absolute top-1 bg-slate-300"></div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Absen Pulang</span>
-              <span class="text-[11px] text-[#64748B]">Selesai jam kerja hari ini</span>
+              <span class="font-bold text-[#1E3A4C] block">Absen Pulang</span>
+              <span class="text-[11px] text-[#6A8696]">Selesai jam kerja hari ini</span>
             </div>
-            <span id="timelineTimePulang" class="font-mono font-bold text-[#142D4E]">--:--</span>
+            <span id="timelineTimePulang" class="font-mono font-bold text-[#1E3A4C]">--:--</span>
           </div>
         </div>
       </div>
@@ -399,14 +507,14 @@
     <!-- ======================================================== -->
     <div id="tabContentHistory" class="hidden space-y-4 animate-pop-in">
       <div class="flex items-center justify-between pt-1">
-        <h2 class="text-xl font-extrabold text-[#142D4E]">Riwayat Kehadiran</h2>
+        <h2 class="text-xl font-extrabold text-[#1E3A4C]">Riwayat Kehadiran</h2>
         <div class="flex items-center gap-2">
           <!-- Button Cetak Laporan PDF Resmi -->
-          <button id="openExportPdfModalBtn" type="button" class="text-xs font-bold text-white bg-[#142D4E] hover:bg-[#0F172A] px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-sm active:scale-95 transition">
+          <button id="openExportPdfModalBtn" type="button" class="text-xs font-bold text-white bg-[#1E3A4C] hover:bg-[#0F172A] px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-sm active:scale-95 transition">
             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
             <span>Cetak PDF</span>
           </button>
-          <button id="exportCsvBtn" type="button" class="text-xs font-bold text-[#168C85] bg-[#E6F7F6] border border-[#168C85]/20 px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-sm">
+          <button id="exportCsvBtn" type="button" class="text-xs font-bold text-[#6CB1C9] bg-[#E8F5F9] border border-[#6CB1C9]/20 px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-sm">
             <i data-lucide="download" class="w-3.5 h-3.5"></i>
             <span>CSV</span>
           </button>
@@ -415,11 +523,11 @@
 
       <!-- Month & Year Selector Card -->
       <div class="hadirku-card p-3 flex items-center justify-between">
-        <button id="prevMonthBtn" type="button" class="p-2 rounded-xl hover:bg-slate-100 text-[#64748B] transition">
+        <button id="prevMonthBtn" type="button" class="p-2 rounded-xl hover:bg-slate-100 text-[#6A8696] transition">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
         </button>
-        <span id="currentPeriodLabel" class="text-sm font-extrabold text-[#142D4E]">Oktober 2026</span>
-        <button id="nextMonthBtn" type="button" class="p-2 rounded-xl hover:bg-slate-100 text-[#64748B] transition">
+        <span id="currentPeriodLabel" class="text-sm font-extrabold text-[#1E3A4C]">Oktober 2026</span>
+        <button id="nextMonthBtn" type="button" class="p-2 rounded-xl hover:bg-slate-100 text-[#6A8696] transition">
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
       </div>
@@ -427,19 +535,19 @@
       <!-- Summary Badges in History -->
       <div class="grid grid-cols-4 gap-2 text-center text-xs">
         <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#64748B] block font-semibold">Hadir</span>
+          <span class="text-[10px] text-[#6A8696] block font-semibold">Hadir</span>
           <span id="histHadirCount" class="text-base font-extrabold text-[#16A34A] block mt-0.5">0</span>
         </div>
         <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#64748B] block font-semibold">Terlambat</span>
+          <span class="text-[10px] text-[#6A8696] block font-semibold">Terlambat</span>
           <span id="histTerlambatCount" class="text-base font-extrabold text-[#F59E0B] block mt-0.5">0</span>
         </div>
         <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#64748B] block font-semibold">Izin</span>
+          <span class="text-[10px] text-[#6A8696] block font-semibold">Izin</span>
           <span id="histIzinCount" class="text-base font-extrabold text-[#0284C7] block mt-0.5">0</span>
         </div>
         <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#64748B] block font-semibold">Alpa</span>
+          <span class="text-[10px] text-[#6A8696] block font-semibold">Alpa</span>
           <span id="histAlpaCount" class="text-base font-extrabold text-[#DC2626] block mt-0.5">0</span>
         </div>
       </div>
@@ -450,7 +558,7 @@
       </div>
 
       <!-- Empty History State -->
-      <div id="emptyHistoryState" class="hidden hadirku-card py-12 text-center text-[#64748B] space-y-2">
+      <div id="emptyHistoryState" class="hidden hadirku-card py-12 text-center text-[#6A8696] space-y-2">
         <i data-lucide="calendar" class="w-10 h-10 mx-auto text-slate-300"></i>
         <p class="text-sm font-semibold">Belum ada riwayat absensi bulan ini.</p>
       </div>
@@ -462,10 +570,10 @@
     <div id="tabContentTasks" class="hidden space-y-4 animate-pop-in">
       <div class="flex items-center justify-between pt-1">
         <div>
-          <h2 class="text-xl font-extrabold text-[#142D4E]">Target Task</h2>
-          <p id="tasksSubtitleProgress" class="text-xs text-[#64748B]">0 dari 0 tugas selesai</p>
+          <h2 class="text-xl font-extrabold text-[#1E3A4C]">Target Task</h2>
+          <p id="tasksSubtitleProgress" class="text-xs text-[#6A8696]">0 dari 0 tugas selesai</p>
         </div>
-        <button id="openAddTaskModalBtn" type="button" class="w-10 h-10 rounded-2xl bg-[#168C85] text-white flex items-center justify-center shadow-md shadow-[#168C85]/20 active:scale-95 transition" title="Tambah Tugas">
+        <button id="openAddTaskModalBtn" type="button" class="w-10 h-10 rounded-2xl bg-[#6CB1C9] text-white flex items-center justify-center shadow-md shadow-[#6CB1C9]/20 active:scale-95 transition" title="Tambah Tugas">
           <i data-lucide="plus" class="w-5 h-5"></i>
         </button>
       </div>
@@ -473,11 +581,11 @@
       <!-- Big Progress Card -->
       <div class="hadirku-card p-4 space-y-2.5">
         <div class="flex items-center justify-between text-xs">
-          <span class="font-semibold text-[#142D4E]">Progres Tugas Hari Ini</span>
-          <span id="tasksPercentBadge" class="font-extrabold text-[#168C85]">0%</span>
+          <span class="font-semibold text-[#1E3A4C]">Progres Tugas Hari Ini</span>
+          <span id="tasksPercentBadge" class="font-extrabold text-[#6CB1C9]">0%</span>
         </div>
         <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-          <div id="tasksProgressBar" class="bg-[#14BBA6] h-full w-0 transition-all duration-300"></div>
+          <div id="tasksProgressBar" class="bg-[#86C7DE] h-full w-0 transition-all duration-300"></div>
         </div>
       </div>
 
@@ -486,7 +594,7 @@
         <!-- 1. Pomodoro Focus Timer Card -->
         <div class="hadirku-card p-3.5 flex flex-col justify-between space-y-2.5 relative overflow-hidden">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5 text-xs font-bold text-[#142D4E]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#1E3A4C]">
               <span class="text-base">🍅</span>
               <span>Pomodoro</span>
             </div>
@@ -495,16 +603,16 @@
 
           <!-- Timer Display -->
           <div class="text-center py-1">
-            <span id="pomoTimerText" class="text-2xl font-extrabold text-[#142D4E] font-mono tracking-tight">25:00</span>
+            <span id="pomoTimerText" class="text-2xl font-extrabold text-[#1E3A4C] font-mono tracking-tight">25:00</span>
           </div>
 
           <!-- Controls -->
           <div class="flex items-center justify-center gap-1.5 pt-1 border-t border-slate-100">
-            <button id="pomoStartPauseBtn" type="button" class="flex-1 py-1.5 px-2 rounded-xl bg-[#168C85] text-white text-xs font-bold shadow-sm hover:bg-[#0D9488] active:scale-95 transition flex items-center justify-center gap-1">
+            <button id="pomoStartPauseBtn" type="button" class="flex-1 py-1.5 px-2 rounded-xl bg-[#6CB1C9] text-white text-xs font-bold shadow-sm hover:bg-[#0D9488] active:scale-95 transition flex items-center justify-center gap-1">
               <i id="pomoPlayIcon" data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
               <span id="pomoPlayText">Mulai</span>
             </button>
-            <button id="pomoResetBtn" type="button" class="py-1.5 px-2.5 rounded-xl bg-slate-100 text-[#64748B] hover:text-[#142D4E] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
+            <button id="pomoResetBtn" type="button" class="py-1.5 px-2.5 rounded-xl bg-slate-100 text-[#6A8696] hover:text-[#1E3A4C] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
               <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             </button>
           </div>
@@ -513,7 +621,7 @@
         <!-- 2. Water Tracker Card -->
         <div class="hadirku-card p-3.5 flex flex-col justify-between space-y-2.5 relative overflow-hidden">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5 text-xs font-bold text-[#142D4E]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#1E3A4C]">
               <span class="text-base">💧</span>
               <span>Air Minum</span>
             </div>
@@ -523,8 +631,8 @@
           <!-- Glass Tracker Display -->
           <div class="text-center py-0.5">
             <div class="flex items-baseline justify-center gap-1">
-              <span id="waterGlassesCount" class="text-2xl font-extrabold text-[#142D4E] font-mono">0</span>
-              <span class="text-xs text-[#64748B] font-semibold">/ 8 gelas</span>
+              <span id="waterGlassesCount" class="text-2xl font-extrabold text-[#1E3A4C] font-mono">0</span>
+              <span class="text-xs text-[#6A8696] font-semibold">/ 8 gelas</span>
             </div>
             <!-- Mini Progress Bar -->
             <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1.5">
@@ -538,7 +646,7 @@
               <i data-lucide="plus" class="w-3.5 h-3.5"></i>
               <span>+1 Gelas</span>
             </button>
-            <button id="resetWaterBtn" type="button" class="py-1.5 px-2 rounded-xl bg-slate-100 text-[#64748B] hover:text-[#142D4E] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
+            <button id="resetWaterBtn" type="button" class="py-1.5 px-2 rounded-xl bg-slate-100 text-[#6A8696] hover:text-[#1E3A4C] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
               <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             </button>
           </div>
@@ -547,9 +655,9 @@
 
       <!-- Filter Buttons -->
       <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-semibold">
-        <button type="button" data-filter="all" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-[#142D4E] text-white shadow-sm transition">Semua</button>
-        <button type="button" data-filter="uncompleted" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#64748B] border border-[#E2E8F0] hover:text-[#142D4E] transition">Belum</button>
-        <button type="button" data-filter="completed" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#64748B] border border-[#E2E8F0] hover:text-[#142D4E] transition">Selesai</button>
+        <button type="button" data-filter="all" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-[#1E3A4C] text-white shadow-sm transition">Semua</button>
+        <button type="button" data-filter="uncompleted" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6A8696] border border-[#E2ECF0] hover:text-[#1E3A4C] transition">Belum</button>
+        <button type="button" data-filter="completed" class="task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6A8696] border border-[#E2ECF0] hover:text-[#1E3A4C] transition">Selesai</button>
       </div>
 
       <!-- Tasks List Container -->
@@ -558,7 +666,7 @@
       </div>
 
       <!-- Empty Tasks State -->
-      <div id="emptyTasksFullState" class="hidden hadirku-card py-12 text-center text-[#64748B] space-y-2">
+      <div id="emptyTasksFullState" class="hidden hadirku-card py-12 text-center text-[#6A8696] space-y-2">
         <i data-lucide="clipboard-check" class="w-10 h-10 mx-auto text-slate-300"></i>
         <p class="text-sm font-semibold">Belum ada tugas untuk filter ini.</p>
         <p class="text-xs text-slate-400">Klik tombol + di pojok kanan atas untuk menambah tugas baru.</p>
@@ -570,25 +678,25 @@
     <!-- ======================================================== -->
     <div id="tabContentProfile" class="hidden space-y-4 animate-pop-in">
       <div class="pt-1">
-        <h2 class="text-xl font-extrabold text-[#142D4E]">Profil</h2>
+        <h2 class="text-xl font-extrabold text-[#1E3A4C]">Profil</h2>
       </div>
 
       <!-- Profile Header Card (Bisa Edit Profil) -->
       <div class="hadirku-card p-5 flex items-center justify-between gap-4">
         <div class="flex items-center gap-3.5 overflow-hidden">
-          <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-[#168C85] to-[#14BBA6] text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-[#168C85]/20 flex-shrink-0">
+          <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-[#6CB1C9] to-[#86C7DE] text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-[#6CB1C9]/20 flex-shrink-0">
             <span id="profileAvatarInitial">J</span>
           </div>
           <div class="overflow-hidden">
-            <h3 id="profileNameDisplay" class="text-base font-extrabold text-[#142D4E] truncate">John Doe</h3>
-            <p id="profileEmailDisplay" class="text-xs text-[#64748B] truncate">Penata Layanan Operasional</p>
-            <span class="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E6F7F6] text-[#168C85]">
+            <h3 id="profileNameDisplay" class="text-base font-extrabold text-[#1E3A4C] truncate">John Doe</h3>
+            <p id="profileEmailDisplay" class="text-xs text-[#6A8696] truncate">Penata Layanan Operasional</p>
+            <span class="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E8F5F9] text-[#6CB1C9]">
               Akun Aktif
             </span>
           </div>
         </div>
-        <button id="openEditProfileBtn" type="button" class="p-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-[#142D4E] flex items-center gap-1.5 text-xs font-bold transition flex-shrink-0" title="Ubah Nama & Jabatan">
-          <i data-lucide="edit-3" class="w-4 h-4 text-[#168C85]"></i>
+        <button id="openEditProfileBtn" type="button" class="p-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-[#1E3A4C] flex items-center gap-1.5 text-xs font-bold transition flex-shrink-0" title="Ubah Nama & Jabatan">
+          <i data-lucide="edit-3" class="w-4 h-4 text-[#6CB1C9]"></i>
           <span class="hidden sm:inline">Ubah</span>
         </button>
       </div>
@@ -599,12 +707,12 @@
         <!-- Baris 1: Jam Kerja 07:30 - 14:30 WITA -->
         <div class="p-4 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-slate-100 text-[#142D4E] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E3A4C] flex items-center justify-center">
               <i data-lucide="clock" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Jam Kerja Standar</span>
-              <span class="text-[#64748B] text-[11px]">07:30 - 14:30 (WITA)</span>
+              <span class="font-bold text-[#1E3A4C] block">Jam Kerja Standar</span>
+              <span class="text-[#6A8696] text-[11px]">07:30 - 14:30 (WITA)</span>
             </div>
           </div>
         </div>
@@ -616,8 +724,8 @@
               <i data-lucide="code" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Pembuat Aplikasi</span>
-              <span class="text-[#168C85] font-semibold text-[11px]">Syamsu Rifani, S.Kom., M.M.</span>
+              <span class="font-bold text-[#1E3A4C] block">Pembuat Aplikasi</span>
+              <span class="text-[#6CB1C9] font-semibold text-[11px]">Syamsu Rifani, S.Kom., M.M.</span>
             </div>
           </div>
         </div>
@@ -625,12 +733,12 @@
         <!-- Baris 3: Database Supabase Cloud -->
         <button id="openConfigBtnProfile" type="button" class="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition text-left">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-[#E6F7F6] text-[#168C85] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-xl bg-[#E8F5F9] text-[#6CB1C9] flex items-center justify-center">
               <i data-lucide="database" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Database Supabase Cloud</span>
-              <span class="text-[#64748B] text-[11px]">Koneksi Project URL & Key</span>
+              <span class="font-bold text-[#1E3A4C] block">Database Supabase Cloud</span>
+              <span class="text-[#6A8696] text-[11px]">Koneksi Project URL & Key</span>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
@@ -639,12 +747,12 @@
         <!-- Baris 4: Pasang Aplikasi PWA -->
         <button id="pwaInstallBtnProfile" type="button" class="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition text-left">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-teal-50 text-[#168C85] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-xl bg-teal-50 text-[#6CB1C9] flex items-center justify-center">
               <i data-lucide="download-cloud" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Pasang Aplikasi HadirKu</span>
-              <span id="pwaStatusTextProfile" class="text-[#64748B] text-[11px]">Install ke layar utama HP / Desktop</span>
+              <span class="font-bold text-[#1E3A4C] block">Pasang Aplikasi HadirKu</span>
+              <span id="pwaStatusTextProfile" class="text-[#6A8696] text-[11px]">Install ke layar utama HP / Desktop</span>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
@@ -657,8 +765,8 @@
               <i data-lucide="bell" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Pengingat Absensi (Notifikasi)</span>
-              <span id="notificationStatusTextProfile" class="text-[#64748B] text-[11px]">07:15 & 14:30 WITA (Senin - Sabtu)</span>
+              <span class="font-bold text-[#1E3A4C] block">Pengingat Absensi (Notifikasi)</span>
+              <span id="notificationStatusTextProfile" class="text-[#6A8696] text-[11px]">07:15 & 14:30 WITA (Senin - Sabtu)</span>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
@@ -667,12 +775,12 @@
         <!-- Baris 6: Tema Tampilan -->
         <button id="themeToggleBtnProfile" type="button" class="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition text-left">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-slate-100 text-[#142D4E] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-xl bg-slate-100 text-[#1E3A4C] flex items-center justify-center">
               <i id="profileThemeIcon" data-lucide="moon" class="w-4 h-4"></i>
             </div>
             <div>
-              <span class="font-bold text-[#142D4E] block">Tema Aplikasi</span>
-              <span id="profileThemeText" class="text-[#64748B] text-[11px]">Mode Terang (Light)</span>
+              <span class="font-bold text-[#1E3A4C] block">Tema Aplikasi</span>
+              <span id="profileThemeText" class="text-[#6A8696] text-[11px]">Mode Terang (Light)</span>
             </div>
           </div>
           <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
@@ -726,7 +834,7 @@
         >
           <i data-lucide="fingerprint" class="w-7 h-7"></i>
         </button>
-        <span class="text-[10px] font-bold text-[#168C85] mt-1">Absen</span>
+        <span class="text-[10px] font-bold text-[#6CB1C9] mt-1">Absen</span>
       </div>
 
       <!-- 04. Tugas -->
@@ -757,19 +865,19 @@
         <i data-lucide="help-circle" class="w-8 h-8"></i>
       </div>
       <div>
-        <h3 class="text-lg font-extrabold text-[#142D4E]">Konfirmasi Absen Pulang</h3>
-        <p class="text-xs text-[#64748B] mt-1">
+        <h3 class="text-lg font-extrabold text-[#1E3A4C]">Konfirmasi Absen Pulang</h3>
+        <p class="text-xs text-[#6A8696] mt-1">
           Apakah Anda yakin ingin menyelesaikan jam kerja dan melakukan absen pulang hari ini?
         </p>
       </div>
-      <div class="p-3 rounded-xl bg-slate-50 text-xs text-[#142D4E] font-medium">
-        Waktu Sekarang: <span id="confirmPulangCurrentTime" class="font-bold font-mono text-[#168C85]">14:30 WITA</span>
+      <div class="p-3 rounded-xl bg-slate-50 text-xs text-[#1E3A4C] font-medium">
+        Waktu Sekarang: <span id="confirmPulangCurrentTime" class="font-bold font-mono text-[#6CB1C9]">14:30 WITA</span>
       </div>
       <div class="grid grid-cols-2 gap-2.5 pt-2">
-        <button id="cancelConfirmPulangBtn" type="button" class="h-11 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#64748B] text-xs font-bold transition">
+        <button id="cancelConfirmPulangBtn" type="button" class="h-11 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#6A8696] text-xs font-bold transition">
           Batal
         </button>
-        <button id="proceedConfirmPulangBtn" type="button" class="h-11 rounded-xl bg-[#142D4E] hover:bg-[#0F172A] text-white text-xs font-bold shadow-md transition">
+        <button id="proceedConfirmPulangBtn" type="button" class="h-11 rounded-xl bg-[#1E3A4C] hover:bg-[#0F172A] text-white text-xs font-bold shadow-md transition">
           Ya, Pulang
         </button>
       </div>
@@ -786,21 +894,21 @@
       </div>
 
       <div class="space-y-1">
-        <h3 id="modalSuccessTitle" class="text-xl font-extrabold text-[#142D4E]">Absen Masuk Berhasil!</h3>
-        <div id="modalSuccessTime" class="text-4xl font-extrabold text-[#142D4E] font-mono py-1">07:30 AM</div>
-        <p id="modalSuccessDate" class="text-xs text-[#64748B] font-medium">Jumat, 16 Oktober 2026</p>
+        <h3 id="modalSuccessTitle" class="text-xl font-extrabold text-[#1E3A4C]">Absen Masuk Berhasil!</h3>
+        <div id="modalSuccessTime" class="text-4xl font-extrabold text-[#1E3A4C] font-mono py-1">07:30 AM</div>
+        <p id="modalSuccessDate" class="text-xs text-[#6A8696] font-medium">Jumat, 16 Oktober 2026</p>
       </div>
 
-      <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-[#64748B] flex items-center justify-center gap-1.5">
-        <i data-lucide="map-pin" class="w-4 h-4 text-[#168C85]"></i>
+      <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-[#6A8696] flex items-center justify-center gap-1.5">
+        <i data-lucide="map-pin" class="w-4 h-4 text-[#6CB1C9]"></i>
         <span>Kehadiran tercatat secara otomatis</span>
       </div>
 
-      <p id="modalSuccessSubtitle" class="text-xs text-[#64748B] italic">
+      <p id="modalSuccessSubtitle" class="text-xs text-[#6A8696] italic">
         Semangat bekerja! Jangan lupa absen pulang sesuai jam kerja ya!
       </p>
 
-      <button id="closeSuccessModalBtn" type="button" class="w-full h-12 rounded-xl font-bold text-sm text-white bg-[#142D4E] hover:bg-[#0F172A] active:scale-[0.98] transition">
+      <button id="closeSuccessModalBtn" type="button" class="w-full h-12 rounded-xl font-bold text-sm text-white bg-[#1E3A4C] hover:bg-[#0F172A] active:scale-[0.98] transition">
         Kembali ke Beranda
       </button>
     </div>
@@ -812,8 +920,8 @@
   <div id="exportPdfModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
     <div class="hadirku-card max-w-md w-full p-6 space-y-4 shadow-2xl animate-pop-in my-8">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
-          <i data-lucide="file-text" class="w-4 h-4 text-[#168C85]"></i>
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-[#6CB1C9]"></i>
           Cetak Rekap Laporan PDF (Ke Atasan)
         </h3>
         <button id="closeExportPdfModalBtn" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -825,38 +933,38 @@
         
         <!-- Bagian 1: Data Pegawai -->
         <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-2.5">
-          <span class="font-extrabold text-[#142D4E] block text-[11px] uppercase tracking-wider">Identitas Pegawai</span>
+          <span class="font-extrabold text-[#1E3A4C] block text-[11px] uppercase tracking-wider">Identitas Pegawai</span>
           <div>
-            <label for="pdfNamaPegawai" class="block font-semibold text-[#172B4D] mb-1">Nama Pegawai:</label>
-            <input type="text" id="pdfNamaPegawai" required placeholder="Contoh: Refan Naufal" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+            <label for="pdfNamaPegawai" class="block font-semibold text-[#1E3A4C] mb-1">Nama Pegawai:</label>
+            <input type="text" id="pdfNamaPegawai" required placeholder="Contoh: Refan Naufal" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label for="pdfNipPegawai" class="block font-semibold text-[#172B4D] mb-1">NIP Pegawai:</label>
-              <input type="text" id="pdfNipPegawai" placeholder="19950812 202012 1 001" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+              <label for="pdfNipPegawai" class="block font-semibold text-[#1E3A4C] mb-1">NIP Pegawai:</label>
+              <input type="text" id="pdfNipPegawai" placeholder="19950812 202012 1 001" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
             </div>
             <div>
-              <label for="pdfJabatanPegawai" class="block font-semibold text-[#172B4D] mb-1">Jabatan:</label>
-              <input type="text" id="pdfJabatanPegawai" placeholder="Staf Operasional" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+              <label for="pdfJabatanPegawai" class="block font-semibold text-[#1E3A4C] mb-1">Jabatan:</label>
+              <input type="text" id="pdfJabatanPegawai" placeholder="Staf Operasional" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
             </div>
           </div>
         </div>
 
         <!-- Bagian 2: Data Atasan -->
         <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-2.5">
-          <span class="font-extrabold text-[#142D4E] block text-[11px] uppercase tracking-wider">Data Atasan Langsung (Tanda Tangan)</span>
+          <span class="font-extrabold text-[#1E3A4C] block text-[11px] uppercase tracking-wider">Data Atasan Langsung (Tanda Tangan)</span>
           <div>
-            <label for="pdfNamaAtasan" class="block font-semibold text-[#172B4D] mb-1">Nama Atasan Langsung:</label>
-            <input type="text" id="pdfNamaAtasan" required placeholder="Contoh: Drs. H. Ahmad Fauzi, M.Si" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+            <label for="pdfNamaAtasan" class="block font-semibold text-[#1E3A4C] mb-1">Nama Atasan Langsung:</label>
+            <input type="text" id="pdfNamaAtasan" required placeholder="Contoh: Drs. H. Ahmad Fauzi, M.Si" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label for="pdfNipAtasan" class="block font-semibold text-[#172B4D] mb-1">NIP Atasan:</label>
-              <input type="text" id="pdfNipAtasan" placeholder="19780514 200212 1 002" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+              <label for="pdfNipAtasan" class="block font-semibold text-[#1E3A4C] mb-1">NIP Atasan:</label>
+              <input type="text" id="pdfNipAtasan" placeholder="19780514 200212 1 002" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
             </div>
             <div>
-              <label for="pdfJabatanAtasan" class="block font-semibold text-[#172B4D] mb-1">Jabatan Atasan:</label>
-              <input type="text" id="pdfJabatanAtasan" placeholder="Kepala Sub Bagian Umum" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+              <label for="pdfJabatanAtasan" class="block font-semibold text-[#1E3A4C] mb-1">Jabatan Atasan:</label>
+              <input type="text" id="pdfJabatanAtasan" placeholder="Kepala Sub Bagian Umum" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
             </div>
           </div>
         </div>
@@ -864,18 +972,18 @@
         <!-- Bagian 3: Kota Penandatanganan -->
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label for="pdfKotaTtd" class="block font-semibold text-[#172B4D] mb-1">Kota / Lokasi:</label>
-            <input type="text" id="pdfKotaTtd" placeholder="Banjarmasin" class="w-full bg-white border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+            <label for="pdfKotaTtd" class="block font-semibold text-[#1E3A4C] mb-1">Kota / Lokasi:</label>
+            <input type="text" id="pdfKotaTtd" placeholder="Banjarmasin" class="w-full bg-white border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
           </div>
           <div>
-            <label class="block font-semibold text-[#172B4D] mb-1">Periode Bulan:</label>
-            <input type="text" id="pdfPeriodeDisplay" readonly class="w-full bg-slate-100 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-slate-500 font-bold" />
+            <label class="block font-semibold text-[#1E3A4C] mb-1">Periode Bulan:</label>
+            <input type="text" id="pdfPeriodeDisplay" readonly class="w-full bg-slate-100 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-slate-500 font-bold" />
           </div>
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" id="cancelExportPdfBtn" class="px-4 py-2.5 rounded-xl bg-slate-100 text-[#64748B] font-bold">Batal</button>
-          <button type="submit" id="btnGeneratePdfDownload" class="px-5 py-2.5 rounded-xl bg-[#142D4E] hover:bg-[#0F172A] text-white font-bold shadow-md flex items-center gap-1.5">
+          <button type="button" id="cancelExportPdfBtn" class="px-4 py-2.5 rounded-xl bg-slate-100 text-[#6A8696] font-bold">Batal</button>
+          <button type="submit" id="btnGeneratePdfDownload" class="px-5 py-2.5 rounded-xl bg-[#1E3A4C] hover:bg-[#0F172A] text-white font-bold shadow-md flex items-center gap-1.5">
             <i data-lucide="download" class="w-3.5 h-3.5"></i>
             <span>Unduh PDF Resmi</span>
           </button>
@@ -979,7 +1087,7 @@
   <div id="calendarDetailModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-xs w-full p-5 space-y-3 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-        <h4 id="calDetailDateTitle" class="text-xs font-extrabold text-[#142D4E]">Jumat, 16 Oktober 2026</h4>
+        <h4 id="calDetailDateTitle" class="text-xs font-extrabold text-[#1E3A4C]">Jumat, 16 Oktober 2026</h4>
         <button id="closeCalDetailModalBtn" class="p-1 text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
@@ -994,8 +1102,8 @@
   <div id="addTaskModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-sm w-full p-5 space-y-4 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
-          <i data-lucide="plus-circle" class="w-4 h-4 text-[#168C85]"></i>
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-[#6CB1C9]"></i>
           Tambah Target Tugas Baru
         </h3>
         <button id="closeAddTaskModalBtn" type="button" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -1005,24 +1113,24 @@
 
       <form id="addTaskModalForm" class="space-y-3">
         <div>
-          <label for="modalTaskTitle" class="block text-xs font-semibold text-[#172B4D] mb-1">Judul Tugas:</label>
-          <input type="text" id="modalTaskTitle" required placeholder="Contoh: Selesaikan laporan harian" class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3.5 py-2.5 text-xs text-[#172B4D] focus:outline-none focus:ring-2 focus:ring-[#168C85]" />
+          <label for="modalTaskTitle" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Judul Tugas:</label>
+          <input type="text" id="modalTaskTitle" required placeholder="Contoh: Selesaikan laporan harian" class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3.5 py-2.5 text-xs text-[#1E3A4C] focus:outline-none focus:ring-2 focus:ring-[#6CB1C9]" />
         </div>
 
         <div>
-          <label for="modalTaskDesc" class="block text-xs font-semibold text-[#172B4D] mb-1">Deskripsi Singkat (Opsional):</label>
-          <textarea id="modalTaskDesc" rows="2" placeholder="Catatan pengerjaan..." class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3.5 py-2 text-xs text-[#172B4D] focus:outline-none focus:ring-2 focus:ring-[#168C85]"></textarea>
+          <label for="modalTaskDesc" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Deskripsi Singkat (Opsional):</label>
+          <textarea id="modalTaskDesc" rows="2" placeholder="Catatan pengerjaan..." class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3.5 py-2 text-xs text-[#1E3A4C] focus:outline-none focus:ring-2 focus:ring-[#6CB1C9]"></textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label for="modalTaskDueDate" class="block text-xs font-semibold text-[#172B4D] mb-1">Tanggal Tenggat:</label>
-            <input type="date" id="modalTaskDueDate" class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:outline-none focus:ring-2 focus:ring-[#168C85]" />
+            <label for="modalTaskDueDate" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Tanggal Tenggat:</label>
+            <input type="date" id="modalTaskDueDate" class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:outline-none focus:ring-2 focus:ring-[#6CB1C9]" />
           </div>
 
           <div>
-            <label for="modalTaskPriority" class="block text-xs font-semibold text-[#172B4D] mb-1">Prioritas:</label>
-            <select id="modalTaskPriority" class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:outline-none focus:ring-2 focus:ring-[#168C85]">
+            <label for="modalTaskPriority" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Prioritas:</label>
+            <select id="modalTaskPriority" class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:outline-none focus:ring-2 focus:ring-[#6CB1C9]">
               <option value="Sedang">🟡 Sedang</option>
               <option value="Tinggi">🔴 Tinggi</option>
               <option value="Rendah">🔵 Rendah</option>
@@ -1031,8 +1139,8 @@
         </div>
 
         <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" id="cancelAddTaskModalBtn" class="px-4 py-2.5 rounded-xl bg-slate-100 text-[#64748B] hover:bg-slate-200 text-xs font-bold">Batal</button>
-          <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#168C85] hover:bg-[#0D9488] text-white text-xs font-bold shadow-md shadow-[#168C85]/20">Simpan Tugas</button>
+          <button type="button" id="cancelAddTaskModalBtn" class="px-4 py-2.5 rounded-xl bg-slate-100 text-[#6A8696] hover:bg-slate-200 text-xs font-bold">Batal</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#6CB1C9] hover:bg-[#0D9488] text-white text-xs font-bold shadow-md shadow-[#6CB1C9]/20">Simpan Tugas</button>
         </div>
       </form>
     </div>
@@ -1044,8 +1152,8 @@
   <div id="notifModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-sm w-full p-5 space-y-4 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
-          <i data-lucide="bell" class="w-4 h-4 text-[#168C85]"></i>
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
+          <i data-lucide="bell" class="w-4 h-4 text-[#6CB1C9]"></i>
           Pengingat Absensi Otomatis
         </h3>
         <button id="closeNotifModalBtn" type="button" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -1056,27 +1164,27 @@
       <div class="space-y-3 text-xs">
         <div class="p-3 rounded-2xl bg-teal-50 border border-teal-100 space-y-1.5">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-[#142D4E]">Status Izin Notifikasi</span>
+            <span class="font-bold text-[#1E3A4C]">Status Izin Notifikasi</span>
             <span id="notifPermissionBadge" class="font-bold px-2 py-0.5 rounded-full text-[10px] bg-slate-200 text-slate-700">Mengecek...</span>
           </div>
-          <p class="text-[11px] text-[#64748B]">Izinkan notifikasi browser agar HadirKu bisa mengirim pengingat jam absen ke HP/Laptop Anda.</p>
+          <p class="text-[11px] text-[#6A8696]">Izinkan notifikasi browser agar HadirKu bisa mengirim pengingat jam absen ke HP/Laptop Anda.</p>
         </div>
 
         <div class="space-y-2 pt-1">
           <label class="flex items-center justify-between p-3 rounded-2xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
             <div class="space-y-0.5">
-              <span class="font-bold text-[#142D4E] block">Pengingat Masuk (07:15 WITA)</span>
-              <span class="text-[11px] text-[#64748B] block">15 menit sebelum masuk kerja</span>
+              <span class="font-bold text-[#1E3A4C] block">Pengingat Masuk (07:15 WITA)</span>
+              <span class="text-[11px] text-[#6A8696] block">15 menit sebelum masuk kerja</span>
             </div>
-            <input type="checkbox" id="toggleNotifMasuk" class="w-5 h-5 accent-[#168C85] rounded cursor-pointer" />
+            <input type="checkbox" id="toggleNotifMasuk" class="w-5 h-5 accent-[#6CB1C9] rounded cursor-pointer" />
           </label>
 
           <label class="flex items-center justify-between p-3 rounded-2xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
             <div class="space-y-0.5">
-              <span class="font-bold text-[#142D4E] block">Pengingat Pulang (14:30 WITA)</span>
-              <span class="text-[11px] text-[#64748B] block">Saat jam kerja selesai</span>
+              <span class="font-bold text-[#1E3A4C] block">Pengingat Pulang (14:30 WITA)</span>
+              <span class="text-[11px] text-[#6A8696] block">Saat jam kerja selesai</span>
             </div>
-            <input type="checkbox" id="toggleNotifPulang" class="w-5 h-5 accent-[#168C85] rounded cursor-pointer" />
+            <input type="checkbox" id="toggleNotifPulang" class="w-5 h-5 accent-[#6CB1C9] rounded cursor-pointer" />
           </label>
         </div>
 
@@ -1087,8 +1195,8 @@
       </div>
 
       <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-        <button type="button" id="testNotifBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#142D4E] text-xs font-bold hover:bg-slate-200 transition">Tes Notifikasi</button>
-        <button type="button" id="saveNotifSettingsBtn" class="px-4 py-2 rounded-xl bg-[#168C85] text-white text-xs font-bold shadow hover:bg-[#0D9488] transition">Simpan</button>
+        <button type="button" id="testNotifBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#1E3A4C] text-xs font-bold hover:bg-slate-200 transition">Tes Notifikasi</button>
+        <button type="button" id="saveNotifSettingsBtn" class="px-4 py-2 rounded-xl bg-[#6CB1C9] text-white text-xs font-bold shadow hover:bg-[#0D9488] transition">Simpan</button>
       </div>
     </div>
   </div>
@@ -1099,7 +1207,7 @@
   <div id="ajukanIzinModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-sm w-full p-5 space-y-4 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
           <i data-lucide="file-text" class="w-4 h-4 text-amber-600"></i>
           Pengajuan Izin / Sakit
         </h3>
@@ -1110,31 +1218,31 @@
 
       <form id="ajukanIzinForm" class="space-y-3.5 text-xs">
         <div>
-          <label class="block font-semibold text-[#172B4D] mb-1">Jenis Ketidakhadiran:</label>
+          <label class="block font-semibold text-[#1E3A4C] mb-1">Jenis Ketidakhadiran:</label>
           <div class="grid grid-cols-2 gap-2">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer has-[:checked]:border-[#168C85] has-[:checked]:bg-teal-50">
-              <input type="radio" name="izinType" value="Izin" checked class="accent-[#168C85]" />
-              <span class="font-bold text-[#142D4E]">📋 Izin</span>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer has-[:checked]:border-[#6CB1C9] has-[:checked]:bg-teal-50">
+              <input type="radio" name="izinType" value="Izin" checked class="accent-[#6CB1C9]" />
+              <span class="font-bold text-[#1E3A4C]">📋 Izin</span>
             </label>
             <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50">
               <input type="radio" name="izinType" value="Sakit" class="accent-rose-600" />
-              <span class="font-bold text-[#142D4E]">🩺 Sakit</span>
+              <span class="font-bold text-[#1E3A4C]">🩺 Sakit</span>
             </label>
           </div>
         </div>
 
         <div>
-          <label for="izinDateInput" class="block font-semibold text-[#172B4D] mb-1">Tanggal:</label>
-          <input type="date" id="izinDateInput" required class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+          <label for="izinDateInput" class="block font-semibold text-[#1E3A4C] mb-1">Tanggal:</label>
+          <input type="date" id="izinDateInput" required class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
         </div>
 
         <div>
-          <label for="izinKeteranganInput" class="block font-semibold text-[#172B4D] mb-1">Alasan / Keterangan:</label>
-          <textarea id="izinKeteranganInput" rows="2.5" placeholder="Contoh: Mengurus berkas dinas / Demam & istirahat dokter" required class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none"></textarea>
+          <label for="izinKeteranganInput" class="block font-semibold text-[#1E3A4C] mb-1">Alasan / Keterangan:</label>
+          <textarea id="izinKeteranganInput" rows="2.5" placeholder="Contoh: Mengurus berkas dinas / Demam & istirahat dokter" required class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none"></textarea>
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" id="cancelAjukanIzinBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#64748B] font-bold">Batal</button>
+          <button type="button" id="cancelAjukanIzinBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#6A8696] font-bold">Batal</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold shadow">Simpan Status</button>
         </div>
       </form>
@@ -1147,8 +1255,8 @@
   <div id="editProfileModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-sm w-full p-5 space-y-4 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
-          <i data-lucide="user-check" class="w-4 h-4 text-[#168C85]"></i>
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-[#6CB1C9]"></i>
           Edit Profil Pengguna
         </h3>
         <button id="closeEditProfileModalBtn" type="button" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -1158,18 +1266,18 @@
 
       <form id="editProfileForm" class="space-y-3 text-xs">
         <div>
-          <label for="inputProfileNama" class="block font-semibold text-[#172B4D] mb-1">Nama Lengkap & Gelar:</label>
-          <input type="text" id="inputProfileNama" placeholder="Contoh: Syamsu Rifani, S.Kom., M.M." required class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2.5 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none font-medium" />
+          <label for="inputProfileNama" class="block font-semibold text-[#1E3A4C] mb-1">Nama Lengkap & Gelar:</label>
+          <input type="text" id="inputProfileNama" placeholder="Contoh: Syamsu Rifani, S.Kom., M.M." required class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2.5 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none font-medium" />
         </div>
 
         <div>
-          <label for="inputProfileJabatan" class="block font-semibold text-[#172B4D] mb-1">Jabatan / Bagian:</label>
-          <input type="text" id="inputProfileJabatan" placeholder="Contoh: Penata Layanan Operasional" class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2.5 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+          <label for="inputProfileJabatan" class="block font-semibold text-[#1E3A4C] mb-1">Jabatan / Bagian:</label>
+          <input type="text" id="inputProfileJabatan" placeholder="Contoh: Penata Layanan Operasional" class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2.5 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" id="cancelEditProfileBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#64748B] font-bold">Batal</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-[#168C85] text-white font-bold shadow">Simpan Profil</button>
+          <button type="button" id="cancelEditProfileBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#6A8696] font-bold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#6CB1C9] text-white font-bold shadow">Simpan Profil</button>
         </div>
       </form>
     </div>
@@ -1181,8 +1289,8 @@
   <div id="configModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="hadirku-card max-w-sm w-full p-5 space-y-4 shadow-2xl animate-pop-in">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-sm font-extrabold text-[#142D4E] flex items-center gap-2">
-          <i data-lucide="database" class="w-4 h-4 text-[#168C85]"></i>
+        <h3 class="text-sm font-extrabold text-[#1E3A4C] flex items-center gap-2">
+          <i data-lucide="database" class="w-4 h-4 text-[#6CB1C9]"></i>
           Pengaturan Supabase Cloud
         </h3>
         <button id="closeConfigModalBtn" type="button" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -1192,18 +1300,18 @@
 
       <form id="configForm" class="space-y-3">
         <div>
-          <label for="cfgSupabaseUrl" class="block text-xs font-semibold text-[#172B4D] mb-1">Project URL:</label>
-          <input type="url" id="cfgSupabaseUrl" placeholder="https://xyz.supabase.co" required class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2.5 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none" />
+          <label for="cfgSupabaseUrl" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Project URL:</label>
+          <input type="url" id="cfgSupabaseUrl" placeholder="https://xyz.supabase.co" required class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2.5 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none" />
         </div>
 
         <div>
-          <label for="cfgSupabaseKey" class="block text-xs font-semibold text-[#172B4D] mb-1">Project Anon Key:</label>
-          <textarea id="cfgSupabaseKey" rows="3" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." required class="w-full bg-slate-50 border border-[#E2E8F0] rounded-xl px-3 py-2 text-xs text-[#172B4D] focus:ring-2 focus:ring-[#168C85] outline-none font-mono"></textarea>
+          <label for="cfgSupabaseKey" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Project Anon Key:</label>
+          <textarea id="cfgSupabaseKey" rows="3" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." required class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:ring-2 focus:ring-[#6CB1C9] outline-none font-mono"></textarea>
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-          <button type="button" id="cancelConfigModalBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#64748B] text-xs font-bold">Batal</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-[#168C85] text-white text-xs font-bold shadow">Simpan</button>
+          <button type="button" id="cancelConfigModalBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 text-[#6A8696] text-xs font-bold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#6CB1C9] text-white text-xs font-bold shadow">Simpan</button>
         </div>
       </form>
     </div>

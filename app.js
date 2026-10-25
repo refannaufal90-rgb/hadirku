@@ -14,7 +14,7 @@
   const USER_PROFILE_KEY = 'hadirku_user_profile';
   const NOTIF_SETTINGS_KEY = 'hadirku_notif_settings';
   const NOTIF_SENT_LOG_KEY = 'hadirku_notif_sent_log';
-  const CIRCLE_CIRCUMFERENCE = 314.159; // 2 * PI * 50
+  const CIRCLE_CIRCUMFERENCE = 301.59; // 2 * PI * 48 // 2 * PI * 50
   const TARGET_WORK_MINUTES = 420; // 7 jam kerja: 07.30 - 14.30 WITA
 
   // --- State ---
@@ -48,16 +48,24 @@
   // Header Elements (Home)
   const userAvatarContainer = document.getElementById('userAvatarContainer');
   const greetingNameDisplay = document.getElementById('greetingNameDisplay');
+  const greetingTimeWord = document.getElementById('greetingTimeWord');
+  const greetingSubQuote = document.getElementById('greetingSubQuote');
   const notificationBtn = document.getElementById('notificationBtn');
   const notifActiveDot = document.getElementById('notifActiveDot');
   const pwaHomeBanner = document.getElementById('pwaHomeBanner');
   const dismissPwaBannerBtn = document.getElementById('dismissPwaBannerBtn');
   const installPwaBannerBtn = document.getElementById('installPwaBannerBtn');
+  
+  // Splash / Landing Elements
+  const splashGetStartedBtn = document.getElementById('splashGetStartedBtn');
+  const splashSignInBtn = document.getElementById('splashSignInBtn');
+  const splashLoadingIndicator = document.getElementById('splashLoadingIndicator');
 
   // Today Circular Ring & Status Card
   const todayFullDateText = document.getElementById('todayFullDateText');
   const todayStatusBadge = document.getElementById('todayStatusBadge');
   const circularProgressArc = document.getElementById('circularProgressArc');
+  const circularPercentText = document.getElementById('circularPercentText');
   const circularWorkedTime = document.getElementById('circularWorkedTime');
   const todayCheckInText = document.getElementById('todayCheckInText');
   const todayCheckOutText = document.getElementById('todayCheckOutText');
@@ -326,15 +334,15 @@
     const toast = document.createElement('div');
     toast.className = `toast-enter flex items-center gap-2.5 p-3.5 rounded-2xl border shadow-xl text-xs text-white pointer-events-auto transition ${
       type === 'success'
-        ? 'bg-[#142D4E] border-[#16A34A] text-white'
+        ? 'bg-[#1E3A4C] border-[#16A34A] text-white'
         : type === 'error'
-        ? 'bg-[#142D4E] border-[#DC2626] text-white'
-        : 'bg-[#142D4E] border-[#168C85] text-white'
+        ? 'bg-[#1E3A4C] border-[#DC2626] text-white'
+        : 'bg-[#1E3A4C] border-[#6CB1C9] text-white'
     }`;
 
     const iconName = type === 'success' ? 'check-circle' : type === 'error' ? 'alert-triangle' : 'info';
     toast.innerHTML = `
-      <i data-lucide="${iconName}" class="w-4 h-4 text-[#14BBA6] flex-shrink-0"></i>
+      <i data-lucide="${iconName}" class="w-4 h-4 text-[#86C7DE] flex-shrink-0"></i>
       <span class="flex-1 font-semibold leading-relaxed">${message}</span>
     `;
 
@@ -407,6 +415,11 @@
   };
 
   const showAppView = () => {
+    // Sembunyikan Splash & Auth, tampilkan App
+    if (splashScreen) {
+      splashScreen.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => splashScreen.classList.add('hidden'), 500);
+    }
     authSection.classList.add('hidden');
     appSection.classList.remove('hidden');
     bottomNav.classList.remove('hidden');
@@ -423,7 +436,15 @@
       const initial = finalName.charAt(0).toUpperCase() || 'U';
       const greetingWord = getTimeBasedGreeting();
 
-      greetingNameDisplay.textContent = `${greetingWord}, ${finalName}!`;
+      // Format baru: "Selamat Pagi," di atas, lalu Nama, lalu "You're doing well"
+      if (greetingTimeWord) greetingTimeWord.textContent = `${greetingWord},`;
+      if (greetingNameDisplay) {
+        greetingNameDisplay.innerHTML = `<span>${finalName}</span><span class="text-xs text-[#FFDEAA]">✨</span>`;
+      }
+      if (greetingSubQuote) {
+        greetingSubQuote.textContent = "You're doing well";
+      }
+
       userAvatarContainer.textContent = initial;
       profileAvatarInitial.textContent = initial;
       profileNameDisplay.textContent = finalName;
@@ -440,19 +461,40 @@
   };
 
   // Auth Tabs (Login vs Register)
-  tabLoginBtn.addEventListener('click', () => {
-    isRegisterMode = false;
-    tabLoginBtn.className = 'flex-1 py-2.5 rounded-lg bg-white text-[#142D4E] shadow-sm font-bold transition';
-    tabRegisterBtn.className = 'flex-1 py-2.5 rounded-lg text-[#64748B] hover:text-[#142D4E] transition';
-    authSubmitText.textContent = 'Masuk';
-  });
+  const setAuthMode = (register) => {
+    isRegisterMode = register;
+    if (isRegisterMode) {
+      tabRegisterBtn.className = 'flex-1 py-2.5 rounded-xl bg-white text-[#1E3A4C] shadow-sm font-bold transition';
+      tabLoginBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] transition';
+      authSubmitText.textContent = 'Daftar Akun Baru';
+    } else {
+      tabLoginBtn.className = 'flex-1 py-2.5 rounded-xl bg-white text-[#1E3A4C] shadow-sm font-bold transition';
+      tabRegisterBtn.className = 'flex-1 py-2.5 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] transition';
+      authSubmitText.textContent = 'Masuk';
+    }
+  };
 
-  tabRegisterBtn.addEventListener('click', () => {
-    isRegisterMode = true;
-    tabRegisterBtn.className = 'flex-1 py-2.5 rounded-lg bg-white text-[#142D4E] shadow-sm font-bold transition';
-    tabLoginBtn.className = 'flex-1 py-2.5 rounded-lg text-[#64748B] hover:text-[#142D4E] transition';
-    authSubmitText.textContent = 'Daftar Akun Baru';
-  });
+  tabLoginBtn.addEventListener('click', () => setAuthMode(false));
+  tabRegisterBtn.addEventListener('click', () => setAuthMode(true));
+
+  // Splash Screen Actions (Get Started -> Register, Sign In -> Login)
+  if (splashGetStartedBtn) {
+    splashGetStartedBtn.addEventListener('click', () => {
+      setAuthMode(true);
+      splashScreen.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => splashScreen.classList.add('hidden'), 500);
+      showAuthView();
+    });
+  }
+
+  if (splashSignInBtn) {
+    splashSignInBtn.addEventListener('click', () => {
+      setAuthMode(false);
+      splashScreen.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => splashScreen.classList.add('hidden'), 500);
+      showAuthView();
+    });
+  }
 
   togglePasswordBtn.addEventListener('click', () => {
     const isPassword = authPassword.type === 'password';
@@ -602,7 +644,10 @@
     if (currentUser) {
       const savedProfile = getSavedUserProfile() || {};
       const finalName = savedProfile.nama || currentUser.email.split('@')[0];
-      greetingNameDisplay.textContent = `${getTimeBasedGreeting()}, ${finalName}!`;
+      if (greetingTimeWord) greetingTimeWord.textContent = `${getTimeBasedGreeting()},`;
+      if (greetingNameDisplay) {
+        greetingNameDisplay.innerHTML = `<span>${finalName}</span><span class="text-xs text-[#FFDEAA]">✨</span>`;
+      }
     }
 
     if (today && (today.status === 'Izin' || today.status === 'Sakit')) {
@@ -618,6 +663,7 @@
       subPunchInText.textContent = today.status;
       subTotalHoursText.textContent = '00:00';
       circularWorkedTime.textContent = today.status;
+      if (circularPercentText) circularPercentText.textContent = '-';
 
       circularProgressArc.style.strokeDashoffset = CIRCLE_CIRCUMFERENCE;
       timelineTimeMasuk.textContent = '-';
@@ -634,6 +680,7 @@
       subPunchInText.textContent = '--:--';
       subTotalHoursText.textContent = '00:00';
       circularWorkedTime.textContent = '00:00';
+      if (circularPercentText) circularPercentText.textContent = '0%';
 
       // Ring empty
       circularProgressArc.style.strokeDashoffset = CIRCLE_CIRCUMFERENCE;
@@ -672,7 +719,8 @@
         subTotalHoursText.textContent = dur.formattedText;
 
         // Target: 7 jam (420 menit)
-        const percent = Math.min(100, (dur.totalMinutes / TARGET_WORK_MINUTES) * 100);
+        const percent = Math.min(100, Math.round((dur.totalMinutes / TARGET_WORK_MINUTES) * 100));
+        if (circularPercentText) circularPercentText.textContent = `${percent}%`;
         const offset = CIRCLE_CIRCUMFERENCE - (percent / 100) * CIRCLE_CIRCUMFERENCE;
         circularProgressArc.style.strokeDashoffset = offset;
       }
@@ -683,7 +731,7 @@
       todayStatusBadge.textContent = isLate ? 'Selesai (Terlambat)' : 'Selesai';
       todayStatusBadge.className = isLate
         ? 'text-xs px-3 py-1 rounded-full font-bold bg-amber-50 text-amber-700 border border-amber-200'
-        : 'text-xs px-3 py-1 rounded-full font-bold bg-slate-100 text-[#142D4E] border border-slate-200';
+        : 'text-xs px-3 py-1 rounded-full font-bold bg-slate-100 text-[#1E3A4C] border border-slate-200';
 
       const checkInAmPm = formatTimeAmPm(today.clock_in);
       const checkOutAmPm = formatTimeAmPm(today.clock_out);
@@ -696,14 +744,15 @@
       timelineTimeMasuk.textContent = checkInAmPm;
       timelineDotMasuk.className = 'timeline-dot -left-6 absolute top-1 bg-[#16A34A]';
       timelineTimePulang.textContent = checkOutAmPm;
-      timelineDotPulang.className = 'timeline-dot -left-6 absolute top-1 bg-[#142D4E]';
+      timelineDotPulang.className = 'timeline-dot -left-6 absolute top-1 bg-[#1E3A4C]';
 
       const dur = calculateDuration(today.clock_in, today.clock_out);
       if (dur) {
         circularWorkedTime.textContent = dur.formattedText;
         subTotalHoursText.textContent = dur.formattedText;
 
-        const percent = Math.min(100, (dur.totalMinutes / TARGET_WORK_MINUTES) * 100);
+        const percent = Math.min(100, Math.round((dur.totalMinutes / TARGET_WORK_MINUTES) * 100));
+        if (circularPercentText) circularPercentText.textContent = `${percent}%`;
         const offset = CIRCLE_CIRCUMFERENCE - (percent / 100) * CIRCLE_CIRCUMFERENCE;
         circularProgressArc.style.strokeDashoffset = offset;
       }
@@ -745,10 +794,10 @@
       item.dataset.date = dStr;
 
       item.innerHTML = `
-        <span class="text-[10px] font-semibold text-[#64748B] block">${dayLabels[i]}</span>
-        <span class="text-xs font-extrabold my-1 block ${isToday ? 'text-[#168C85]' : 'text-[#172B4D]'}">${d.getDate()}</span>
+        <span class="text-[10px] font-semibold text-[#6A8696] block">${dayLabels[i]}</span>
+        <span class="text-xs font-extrabold my-1 block ${isToday ? 'text-[#6CB1C9]' : 'text-[#1E3A4C]'}">${d.getDate()}</span>
         <div class="w-1.5 h-1.5 rounded-full ${
-          isHadir ? 'bg-[#16A34A]' : isToday ? 'bg-[#14BBA6]' : 'bg-transparent'
+          isHadir ? 'bg-[#16A34A]' : isToday ? 'bg-[#86C7DE]' : 'bg-transparent'
         }"></div>
       `;
 
@@ -773,26 +822,26 @@
       calDetailBody.innerHTML = `
         <div class="p-3 rounded-xl bg-slate-50 space-y-1.5">
           <div class="flex items-center justify-between">
-            <span class="text-[#64748B]">Status:</span>
+            <span class="text-[#6A8696]">Status:</span>
             <span class="font-bold text-[#16A34A]">${record.status || 'Hadir'}</span>
           </div>
           <div class="flex items-center justify-between">
-            <span class="text-[#64748B]">Jam Masuk:</span>
+            <span class="text-[#6A8696]">Jam Masuk:</span>
             <span class="font-bold font-mono">${formatTimeAmPm(record.clock_in)}</span>
           </div>
           <div class="flex items-center justify-between">
-            <span class="text-[#64748B]">Jam Pulang:</span>
+            <span class="text-[#6A8696]">Jam Pulang:</span>
             <span class="font-bold font-mono">${record.clock_out ? formatTimeAmPm(record.clock_out) : 'Belum absen pulang'}</span>
           </div>
           <div class="flex items-center justify-between">
-            <span class="text-[#64748B]">Total Durasi:</span>
-            <span class="font-bold text-[#168C85]">${dur ? dur.formattedText + ' jam' : '-'}</span>
+            <span class="text-[#6A8696]">Total Durasi:</span>
+            <span class="font-bold text-[#6CB1C9]">${dur ? dur.formattedText + ' jam' : '-'}</span>
           </div>
         </div>
       `;
     } else {
       calDetailBody.innerHTML = `
-        <div class="p-3 rounded-xl bg-slate-50 text-center text-[#64748B] text-xs">
+        <div class="p-3 rounded-xl bg-slate-50 text-center text-[#6A8696] text-xs">
           Belum ada catatan absensi untuk tanggal ini.
         </div>
       `;
@@ -835,7 +884,7 @@
     homeTaskListPreview.innerHTML = '';
     if (todayTasks.length === 0) {
       homeTaskListPreview.innerHTML = `
-        <div class="text-center py-3 text-xs text-[#64748B]">
+        <div class="text-center py-3 text-xs text-[#6A8696]">
           Belum ada target tugas hari ini.
         </div>
       `;
@@ -853,11 +902,11 @@
           <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0 pr-2">
             <input 
               type="checkbox" 
-              class="quick-task-cb w-4 h-4 rounded text-[#168C85] focus:ring-0 cursor-pointer"
+              class="quick-task-cb w-4 h-4 rounded text-[#6CB1C9] focus:ring-0 cursor-pointer"
               data-id="${task.id}"
               ${task.completed ? 'checked' : ''}
             />
-            <span class="task-title text-xs font-semibold text-[#172B4D] truncate select-none">
+            <span class="task-title text-xs font-semibold text-[#1E3A4C] truncate select-none">
               ${escapeHtml(task.title)}
             </span>
           </label>
@@ -899,17 +948,17 @@
         <div class="flex items-start gap-3 flex-1 min-w-0">
           <input 
             type="checkbox" 
-            class="full-task-cb mt-1 w-4 h-4 rounded text-[#168C85] focus:ring-0 cursor-pointer"
+            class="full-task-cb mt-1 w-4 h-4 rounded text-[#6CB1C9] focus:ring-0 cursor-pointer"
             data-id="${task.id}"
             ${task.completed ? 'checked' : ''}
           />
           <div class="space-y-1 overflow-hidden">
-            <h4 class="task-title text-xs font-bold text-[#142D4E] truncate select-none">
+            <h4 class="task-title text-xs font-bold text-[#1E3A4C] truncate select-none">
               ${escapeHtml(task.title)}
             </h4>
             ${
               task.description
-                ? `<p class="text-[11px] text-[#64748B] line-clamp-2">${escapeHtml(task.description)}</p>`
+                ? `<p class="text-[11px] text-[#6A8696] line-clamp-2">${escapeHtml(task.description)}</p>`
                 : ''
             }
             <div class="flex items-center gap-2 pt-0.5">
@@ -920,7 +969,7 @@
               </span>
               ${
                 task.due_date
-                  ? `<span class="text-[10px] text-[#64748B] flex items-center gap-1 font-medium">
+                  ? `<span class="text-[10px] text-[#6A8696] flex items-center gap-1 font-medium">
                       <i data-lucide="calendar" class="w-3 h-3"></i>
                       ${formatDisplayDateShort(task.due_date)}
                     </span>`
@@ -946,9 +995,9 @@
     btn.addEventListener('click', () => {
       taskFilter = btn.dataset.filter;
       document.querySelectorAll('.task-filter-btn').forEach((b) => {
-        b.className = 'task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#64748B] border border-[#E2E8F0] hover:text-[#142D4E] transition';
+        b.className = 'task-filter-btn px-3.5 py-1.5 rounded-xl bg-white text-[#6A8696] border border-[#E2ECF0] hover:text-[#1E3A4C] transition';
       });
-      btn.className = 'task-filter-btn px-3.5 py-1.5 rounded-xl bg-[#142D4E] text-white shadow-sm transition font-bold';
+      btn.className = 'task-filter-btn px-3.5 py-1.5 rounded-xl bg-[#1E3A4C] text-white shadow-sm transition font-bold';
       renderFullTaskList();
     });
   });
@@ -1279,23 +1328,23 @@
 
       card.innerHTML = `
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-[#142D4E]">${formatDisplayDateShort(r.date)}</span>
+          <span class="text-xs font-bold text-[#1E3A4C]">${formatDisplayDateShort(r.date)}</span>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#16A34A] border border-emerald-200">
             ${r.status || 'Hadir'}
           </span>
         </div>
         <div class="grid grid-cols-3 gap-2 text-xs pt-1">
           <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#64748B] block">Masuk</span>
-            <span class="font-bold text-[#142D4E] font-mono">${formatTimeAmPm(r.clock_in)}</span>
+            <span class="text-[10px] text-[#6A8696] block">Masuk</span>
+            <span class="font-bold text-[#1E3A4C] font-mono">${formatTimeAmPm(r.clock_in)}</span>
           </div>
           <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#64748B] block">Pulang</span>
-            <span class="font-bold text-[#142D4E] font-mono">${r.clock_out ? formatTimeAmPm(r.clock_out) : '-'}</span>
+            <span class="text-[10px] text-[#6A8696] block">Pulang</span>
+            <span class="font-bold text-[#1E3A4C] font-mono">${r.clock_out ? formatTimeAmPm(r.clock_out) : '-'}</span>
           </div>
           <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#64748B] block">Durasi</span>
-            <span class="font-bold text-[#168C85]">${durText}</span>
+            <span class="text-[10px] text-[#6A8696] block">Durasi</span>
+            <span class="font-bold text-[#6CB1C9]">${durText}</span>
           </div>
         </div>
       `;
@@ -1496,7 +1545,7 @@
       modalSuccessBadge.className = 'w-20 h-20 mx-auto rounded-full bg-[#16A34A] text-white flex items-center justify-center shadow-xl shadow-[#16A34A]/30';
       modalSuccessSubtitle.textContent = 'Semangat bekerja! Jangan lupa absen pulang sesuai jam kerja ya!';
     } else {
-      modalSuccessBadge.className = 'w-20 h-20 mx-auto rounded-full bg-[#142D4E] text-white flex items-center justify-center shadow-xl shadow-[#142D4E]/30';
+      modalSuccessBadge.className = 'w-20 h-20 mx-auto rounded-full bg-[#1E3A4C] text-white flex items-center justify-center shadow-xl shadow-[#1E3A4C]/30';
       modalSuccessSubtitle.textContent = 'Terima kasih! Hari ini sudah selesai. Sampai jumpa besok!';
     }
 
@@ -1733,17 +1782,19 @@
   // --- Initial Auth Check ---
   const checkInitialAuth = async () => {
     if (!supabase) {
-      showAuthView();
+      if (splashLoadingIndicator) splashLoadingIndicator.classList.add('hidden');
       return;
     }
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (session && session.user) {
+        // Jika sudah login sebelumnya -> Langsung masuk Dashboard (skip splash)
         currentUser = session.user;
         await loadAllDataFromCloud();
       } else {
-        showAuthView();
+        // Belum login -> Hentikan indikator loading di splash (biarkan user klik Get Started / Sign In)
+        if (splashLoadingIndicator) splashLoadingIndicator.classList.add('hidden');
       }
 
       supabase.auth.onAuthStateChange(async (event, session) => {
@@ -1752,12 +1803,11 @@
           await loadAllDataFromCloud();
         } else {
           currentUser = null;
-          showAuthView();
         }
       });
     } catch (err) {
       console.error('Auth error:', err);
-      showAuthView();
+      if (splashLoadingIndicator) splashLoadingIndicator.classList.add('hidden');
     }
   };
 
@@ -2146,15 +2196,13 @@
     updatePomoDisplay();
     renderWaterTracker();
 
-    // Fade out splash screen after 1.5s
-    setTimeout(() => {
-      splashScreen.classList.add('opacity-0', 'pointer-events-none');
-      setTimeout(() => splashScreen.remove(), 500);
-      checkInitialAuth();
-    }, 1500);
+    // Check auth session
+    checkInitialAuth();
 
     if (window.lucide) window.lucide.createIcons();
   };
 
   init();
 })();
+
+

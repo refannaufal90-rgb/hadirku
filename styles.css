@@ -1,24 +1,25 @@
-/* HadirKu Design System Stylesheet */
-/* Acuan Dribbble & Mockup Final HadirKu */
+/* HadirKu Design System Stylesheet - Noguchi Blue Color Palette */
+/* Palet: Sky Blue (#6CB1C9), Warm Vanilla (#FFDEAA), Clean Off-White (#F0F0F0), Earth Caramel (#BF8E68), Deep Navy Slate (#1E3A4C) */
 
 :root {
-  --primary-navy: #142D4E;
-  --primary-teal: #168C85;
-  --teal-accent: #14BBA6;
-  --teal-light: #E6F7F6;
-  --success: #16845B;
-  --success-light: #EBF7EE;
-  --danger: #DC4545;
-  --danger-light: #FDECEC;
-  --warning: #F59E0B;
-  --warning-light: #FEF3C7;
-  --bg-page: #F5F7FA;
+  --primary-navy: #1E3A4C;
+  --primary-teal: #6CB1C9;
+  --teal-accent: #86C7DE;
+  --teal-light: #E8F5F9;
+  --success: #4CA88B;
+  --success-light: #EBF7F3;
+  --danger: #D9534F;
+  --danger-light: #FDEEEE;
+  --warning: #FFDEAA;
+  --warning-dark: #C68E3E;
+  --accent-caramel: #BF8E68;
+  --bg-page: #F6F9FA;
   --surface: #FFFFFF;
-  --text-main: #172B4D;
-  --text-secondary: #64748B;
-  --border-color: #E2E8F0;
-  --card-radius: 20px;
-  --btn-radius: 14px;
+  --text-main: #1E3A4C;
+  --text-secondary: #6A8696;
+  --border-color: #E2ECF0;
+  --card-radius: 24px;
+  --btn-radius: 16px;
 }
 
 html {
@@ -40,10 +41,10 @@ body {
 
 /* HadirKu Card Styles */
 .hadirku-card {
-  background-color: #ffffff;
+  background-color: var(--surface);
   border: 1px solid var(--border-color);
   border-radius: var(--card-radius);
-  box-shadow: 0 4px 20px -2px rgba(20, 45, 78, 0.04);
+  box-shadow: 0 8px 24px -4px rgba(30, 58, 76, 0.05);
 }
 
 /* Circular Timer Progress Ring */
@@ -57,14 +58,14 @@ body {
 .nav-fab {
   width: 58px;
   height: 58px;
-  background: linear-gradient(135deg, #14BBA6, #0D9488);
+  background: linear-gradient(135deg, #6CB1C9, #1E3A4C);
   border-radius: 50%;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px -2px rgba(20, 187, 166, 0.45);
-  border: 4px solid #ffffff;
+  box-shadow: 0 8px 24px -2px rgba(108, 177, 201, 0.5);
+  border: 4px solid #F6F9FA;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -74,10 +75,10 @@ body {
 
 /* Bottom Navigation Bar */
 .bottom-nav {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(14px);
   border-top: 1px solid var(--border-color);
-  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4px 25px rgba(30, 58, 76, 0.04);
 }
 
 .bottom-nav-item {
@@ -86,12 +87,12 @@ body {
 }
 
 .bottom-nav-item.active {
-  color: #168C85;
+  color: #6CB1C9;
 }
 
 .bottom-nav-item.active .nav-icon-wrapper {
-  background-color: #E6F7F6;
-  color: #168C85;
+  background-color: #E8F5F9;
+  color: #6CB1C9;
 }
 
 /* Weekly Calendar Item */
@@ -101,13 +102,13 @@ body {
 }
 
 .cal-day-item:hover {
-  background-color: #F1F5F9;
+  background-color: #EEF4F7;
 }
 
 .cal-day-item.today {
-  background-color: #E6F7F6;
-  border: 1.5px solid #14BBA6;
-  color: #168C85;
+  background-color: #E8F5F9;
+  border: 1.5px solid #6CB1C9;
+  color: #1E3A4C;
 }
 
 /* Timeline Connectors */
@@ -115,7 +116,7 @@ body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 3px solid #ffffff;
+  border: 3px solid #FFFFFF;
   box-shadow: 0 0 0 2px var(--border-color);
 }
 
@@ -125,19 +126,27 @@ body {
   left: 6px;
   bottom: -16px;
   width: 2px;
-  background-color: #E2E8F0;
+  background-color: #E2ECF0;
 }
 
 /* Priority Badges */
 .badge-priority-tinggi {
-  background-color: #FEE2E2;
-  color: #DC2626;
-  border: 1px solid #FECACA;
+  background-color: #FDEEEE;
+  color: #D9534F;
+  border: 1px solid #F8D2D2;
 }
 
 .badge-priority-sedang {
-  background-color: #FEF3C7;
-  color: #D97706;
+  background-color: #FFF6E5;
+  color: #B57F26;
+  border: 1px solid #FFE6BC;
+}
+
+.badge-priority-rendah {
+  background-color: #E8F5F9;
+  color: #388CA7;
+  border: 1px solid #CCEAF2;
+}
   border: 1px solid #FDE68A;
 }
 
