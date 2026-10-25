@@ -759,7 +759,7 @@
     }
   };
 
-  // --- 04. KALENDER MINGGUAN (Senin s/d Minggu) ---
+  // --- 04. KALENDER MINGGUAN (Gaya Kapsul Oval & Bulat Sesuai Foto) ---
   const renderWeeklyCalendar = () => {
     weeklyCalendarGrid.innerHTML = '';
     const now = new Date();
@@ -772,9 +772,9 @@
     const sundayDate = new Date(mondayDate);
     sundayDate.setDate(mondayDate.getDate() + 6);
 
-    weekRangeLabel.textContent = `${mondayDate.getDate()} - ${sundayDate.getDate()} ${now.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}`;
+    weekRangeLabel.textContent = `${mondayDate.getDate()} - ${sundayDate.getDate()} ${now.toLocaleDateString('id-ID', { month: 'short', year: 'numeric' })}`;
 
-    const dayLabels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+    const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const todayStr = getTodayDateString();
 
     for (let i = 0; i < 7; i++) {
@@ -788,18 +788,26 @@
       const isHadir = record && record.clock_in;
 
       const item = document.createElement('div');
-      item.className = `cal-day-item flex flex-col items-center py-2 px-1 cursor-pointer ${
-        isToday ? 'today' : ''
-      }`;
       item.dataset.date = dStr;
 
-      item.innerHTML = `
-        <span class="text-[10px] font-semibold text-[#6A8696] block">${dayLabels[i]}</span>
-        <span class="text-xs font-extrabold my-1 block ${isToday ? 'text-[#6CB1C9]' : 'text-[#1E3A4C]'}">${d.getDate()}</span>
-        <div class="w-1.5 h-1.5 rounded-full ${
-          isHadir ? 'bg-[#16A34A]' : isToday ? 'bg-[#86C7DE]' : 'bg-transparent'
-        }"></div>
-      `;
+      // Gaya Kapsul Oval Sesuai Foto
+      // Jika Hari Ini: Lingkaran / Kapsul Hitam/Navy Kontras Solid dengan teks putih
+      // Jika Hari Lain: Kapsul Abu/Biru Muda Halus
+      if (isToday) {
+        item.className = 'cal-day-item flex-1 flex flex-col items-center justify-center py-2.5 px-1.5 rounded-full bg-[#1E3A4C] text-white shadow-md shadow-[#1E3A4C]/25 cursor-pointer transition active:scale-95';
+        item.innerHTML = `
+          <span class="text-[9px] font-semibold text-[#86C7DE] block uppercase tracking-tight">${dayLabels[i]}</span>
+          <span class="text-sm font-extrabold my-0.5 block font-mono">${d.getDate()}</span>
+          <div class="w-1.5 h-1.5 rounded-full ${isHadir ? 'bg-[#4CA88B]' : 'bg-[#FFDEAA]'}"></div>
+        `;
+      } else {
+        item.className = 'cal-day-item flex-1 flex flex-col items-center justify-center py-2.5 px-1.5 rounded-full bg-[#F0F5F7] hover:bg-[#E8F1F5] text-[#1E3A4C] cursor-pointer transition active:scale-95';
+        item.innerHTML = `
+          <span class="text-[9px] font-semibold text-[#6A8696] block uppercase tracking-tight">${dayLabels[i]}</span>
+          <span class="text-xs font-bold my-0.5 block font-mono text-[#1E3A4C]">${d.getDate()}</span>
+          <div class="w-1.5 h-1.5 rounded-full ${isHadir ? 'bg-[#4CA88B]' : 'bg-transparent'}"></div>
+        `;
+      }
 
       weeklyCalendarGrid.appendChild(item);
     }
@@ -880,46 +888,86 @@
     tasksPercentBadge.textContent = `${percent}%`;
     tasksProgressBar.style.width = `${percent}%`;
 
-    // Render Home 3 Tasks Preview
+    // Render Home Daily Routine Preview (Gaya Gambar Budi: Stepper Line & Rounded Icon Cards)
     homeTaskListPreview.innerHTML = '';
     if (todayTasks.length === 0) {
       homeTaskListPreview.innerHTML = `
-        <div class="text-center py-3 text-xs text-[#6A8696]">
-          Belum ada target tugas hari ini.
+        <div class="text-center py-5 text-xs text-[#6A8696] bg-[#F6F9FA] rounded-2xl border border-dashed border-[#E2ECF0]">
+          Belum ada daily routine untuk hari ini.
         </div>
       `;
     } else {
       const sorted = [...todayTasks].sort((a, b) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1));
-      const previewSlice = sorted.slice(0, 3);
+      const previewSlice = sorted.slice(0, 4);
 
-      previewSlice.forEach((task) => {
-        const item = document.createElement('div');
-        item.className = `task-item flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 ${
-          task.completed ? 'completed' : ''
-        }`;
+      // Icon & Color Palette Preset untuk kartu routine (seperti di foto Budi)
+      const routineIconPresets = [
+        { icon: 'coffee', bg: 'bg-[#FFF0E0]', color: 'text-[#E88D67]' },
+        { icon: 'book-open', bg: 'bg-[#EBF7F3]', color: 'text-[#4CA88B]' },
+        { icon: 'activity', bg: 'bg-[#F9EDF5]', color: 'text-[#C95B9B]' },
+        { icon: 'sun', bg: 'bg-[#E8F5F9]', color: 'text-[#6CB1C9]' }
+      ];
 
-        item.innerHTML = `
-          <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0 pr-2">
-            <input 
-              type="checkbox" 
-              class="quick-task-cb w-4 h-4 rounded text-[#6CB1C9] focus:ring-0 cursor-pointer"
+      previewSlice.forEach((task, idx) => {
+        const preset = routineIconPresets[idx % routineIconPresets.length];
+        const isLast = idx === previewSlice.length - 1;
+
+        const row = document.createElement('div');
+        row.className = 'flex items-center gap-3 relative';
+
+        row.innerHTML = `
+          <!-- Stepper Check Indicator (Kiri: Garis Putus & Checklist Bulat Oranye) -->
+          <div class="relative flex flex-col items-center flex-shrink-0">
+            <button 
+              type="button" 
+              class="quick-task-toggle-btn w-6 h-6 rounded-full flex items-center justify-center transition active:scale-90 ${
+                task.completed ? 'bg-[#E88D67] text-white shadow-xs' : 'border-2 border-[#E2ECF0] bg-white text-transparent'
+              }" 
               data-id="${task.id}"
-              ${task.completed ? 'checked' : ''}
-            />
-            <span class="task-title text-xs font-semibold text-[#1E3A4C] truncate select-none">
-              ${escapeHtml(task.title)}
-            </span>
-          </label>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${
-            task.priority === 'Tinggi' ? 'badge-priority-tinggi' : task.priority === 'Rendah' ? 'badge-priority-rendah' : 'badge-priority-sedang'
-          }">
-            ${task.priority || 'Sedang'}
-          </span>
+              data-completed="${task.completed ? 'true' : 'false'}"
+            >
+              <i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>
+            </button>
+            ${!isLast ? '<div class="w-0.5 h-7 border-l-2 border-dashed border-[#E2ECF0] my-0.5"></div>' : ''}
+          </div>
+
+          <!-- Squircle Daily Routine Card (Kanan: Gaya Kartu Budi) -->
+          <div class="flex-1 bg-white border border-[#E2ECF0] hover:border-[#6CB1C9]/40 p-3 rounded-2xl flex items-center justify-between gap-2.5 shadow-2xs transition hover:shadow-xs">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <!-- Pastel Squircle Icon Box -->
+              <div class="w-10 h-10 rounded-2xl ${preset.bg} ${preset.color} flex items-center justify-center flex-shrink-0">
+                <i data-lucide="${preset.icon}" class="w-4 h-4"></i>
+              </div>
+
+              <!-- Title & Streak / Priority -->
+              <div class="overflow-hidden">
+                <h4 class="text-xs font-bold text-[#1E3A4C] truncate ${task.completed ? 'line-through opacity-60' : ''}">
+                  ${escapeHtml(task.title)}
+                </h4>
+                <p class="text-[10px] text-[#6A8696] font-medium mt-0.5 truncate">
+                  ${task.priority === 'Tinggi' ? '?? Prioritas Tinggi' : task.priority === 'Rendah' ? '?? Ringan' : '? Fokus Rutin'}
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Duration / Clock Pill -->
+            <div class="flex items-center gap-1 text-[10px] font-bold text-[#6A8696] bg-[#F6F9FA] px-2 py-1 rounded-xl flex-shrink-0">
+              <i data-lucide="clock" class="w-3 h-3 text-[#6CB1C9]"></i>
+              <span>Hari Ini</span>
+            </div>
+          </div>
         `;
-        homeTaskListPreview.appendChild(item);
+
+        homeTaskListPreview.appendChild(row);
       });
     }
 
+    // Update active pomodoro task title if present
+    const pomoActiveTaskTitle = document.getElementById('pomoActiveTaskTitle');
+    if (pomoActiveTaskTitle) {
+      const activeTask = todayTasks.find((t) => !t.completed);
+      pomoActiveTaskTitle.textContent = activeTask ? activeTask.title : 'Selesaikan Target Kerja Hari Ini';
+    }
     renderFullTaskList();
   };
 
@@ -1021,9 +1069,12 @@
     }
   };
 
-  homeTaskListPreview.addEventListener('change', (e) => {
-    const cb = e.target.closest('.quick-task-cb');
-    if (cb) handleTaskToggle(cb.dataset.id, cb.checked);
+  homeTaskListPreview.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quick-task-toggle-btn');
+    if (btn) {
+      const currentCompleted = btn.dataset.completed === 'true';
+      handleTaskToggle(btn.dataset.id, !currentCompleted);
+    }
   });
 
   fullTaskListContainer.addEventListener('change', (e) => {
@@ -1106,7 +1157,10 @@
     }
   });
 
-  // --- WIDGET PRODUKTIVITAS: POMODORO & WATER TRACKER ---
+  // --- WIDGET PRODUKTIVITAS: POMODORO GAYA FOTO & WATER TRACKER ---
+  const pomoSelectFocusBtn = document.getElementById('pomoSelectFocusBtn');
+  const pomoSelectBreakBtn = document.getElementById('pomoSelectBreakBtn');
+
   const POMO_WORK_SECONDS = 25 * 60; // 25 Menit
   const POMO_BREAK_SECONDS = 5 * 60; // 5 Menit
   let pomoTimeLeft = POMO_WORK_SECONDS;
@@ -1119,17 +1173,17 @@
     const secs = pomoTimeLeft % 60;
     if (pomoTimerText) pomoTimerText.textContent = `${padZero(mins)}:${padZero(secs)}`;
 
-    if (pomoModeBadge) {
+    // Update Tab Focus vs Break Pill Styles (Persis Foto)
+    if (pomoSelectFocusBtn && pomoSelectBreakBtn) {
       if (pomoIsBreak) {
-        pomoModeBadge.textContent = 'Istirahat 5m';
-        pomoModeBadge.className = 'text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200';
+        pomoSelectBreakBtn.className = 'flex-1 py-1.5 px-3 rounded-xl bg-[#6CB1C9] text-white shadow-xs font-bold transition';
+        pomoSelectFocusBtn.className = 'flex-1 py-1.5 px-3 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] font-semibold transition';
       } else {
-        pomoModeBadge.textContent = 'Fokus 25m';
-        pomoModeBadge.className = 'text-[9px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200';
+        pomoSelectFocusBtn.className = 'flex-1 py-1.5 px-3 rounded-xl bg-[#6CB1C9] text-white shadow-xs font-bold transition';
+        pomoSelectBreakBtn.className = 'flex-1 py-1.5 px-3 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] font-semibold transition';
       }
     }
 
-    if (pomoPlayText) pomoPlayText.textContent = pomoIsRunning ? 'Jeda' : 'Mulai';
     if (pomoPlayIcon) {
       pomoPlayIcon.setAttribute('data-lucide', pomoIsRunning ? 'pause' : 'play');
       if (window.lucide) window.lucide.createIcons();
@@ -1145,21 +1199,18 @@
         pomoTimeLeft--;
         updatePomoDisplay();
       } else {
-        // Waktu habis
         clearInterval(pomoInterval);
         pomoIsRunning = false;
 
         if (!pomoIsBreak) {
-          // Selesai Sesi Fokus -> Ganti ke Istirahat
           pomoIsBreak = true;
           pomoTimeLeft = POMO_BREAK_SECONDS;
-          sendSystemNotification('ðŸ… Pomodoro Selesai!', 'Kerja fokus 25 menit selesai! Saatnya istirahat santai 5 menit.');
+          sendSystemNotification('?? Pomodoro Selesai!', 'Kerja fokus 25 menit selesai! Saatnya istirahat santai 5 menit.');
           showToast('Sesi fokus selesai! Waktunya istirahat 5 menit.', 'success');
         } else {
-          // Selesai Sesi Istirahat -> Ganti ke Fokus
           pomoIsBreak = false;
           pomoTimeLeft = POMO_WORK_SECONDS;
-          sendSystemNotification('â° Waktu Istirahat Selesai!', 'Istirahat 5 menit selesai! Siap kembali fokus kerja?');
+          sendSystemNotification('? Waktu Istirahat Selesai!', 'Istirahat 5 menit selesai! Siap kembali fokus kerja?');
           showToast('Istirahat selesai! Mari kembali produktif.', 'info');
         }
         updatePomoDisplay();
@@ -1176,10 +1227,28 @@
   const resetPomoTimer = () => {
     pomoIsRunning = false;
     clearInterval(pomoInterval);
-    pomoIsBreak = false;
-    pomoTimeLeft = POMO_WORK_SECONDS;
+    pomoTimeLeft = pomoIsBreak ? POMO_BREAK_SECONDS : POMO_WORK_SECONDS;
     updatePomoDisplay();
+    showToast('Sesi Pomodoro diselesaikan!', 'info');
   };
+
+  if (pomoSelectFocusBtn) {
+    pomoSelectFocusBtn.addEventListener('click', () => {
+      pausePomoTimer();
+      pomoIsBreak = false;
+      pomoTimeLeft = POMO_WORK_SECONDS;
+      updatePomoDisplay();
+    });
+  }
+
+  if (pomoSelectBreakBtn) {
+    pomoSelectBreakBtn.addEventListener('click', () => {
+      pausePomoTimer();
+      pomoIsBreak = true;
+      pomoTimeLeft = POMO_BREAK_SECONDS;
+      updatePomoDisplay();
+    });
+  }
 
   if (pomoStartPauseBtn) {
     pomoStartPauseBtn.addEventListener('click', () => {
@@ -1194,7 +1263,6 @@
   if (pomoResetBtn) {
     pomoResetBtn.addEventListener('click', resetPomoTimer);
   }
-
   // Water Tracker
   const WATER_KEY = 'hadirku_water_tracker';
   const TARGET_WATER_GLASSES = 8;
@@ -1306,6 +1374,7 @@
     renderHistoryList(monthRecords);
   };
 
+  // --- 06. RENDER DAFTAR RIWAYAT KEHADIRAN (Gaya Schedule Card Sesuai Gambar) ---
   const renderHistoryList = (monthRecords) => {
     historyListContainer.innerHTML = '';
 
@@ -1317,44 +1386,121 @@
     emptyHistoryState.classList.add('hidden');
 
     monthRecords.forEach((r) => {
-      const card = document.createElement('div');
-      card.className = 'hadirku-card p-4 space-y-2';
-
       let durText = '-';
-      if (r.clock_in && r.clock_out) {
+      let totalMinutes = 0;
+      if (r.duration_minutes) {
+        totalMinutes = r.duration_minutes;
+        const h = Math.floor(r.duration_minutes / 60);
+        const m = r.duration_minutes % 60;
+        durText = `${h} Jam ${m} Menit`;
+      } else if (r.clock_in && r.clock_out) {
         const d = calculateDuration(r.clock_in, r.clock_out);
-        durText = d ? `${d.hours}j ${d.minutes}m` : '-';
+        if (d) {
+          totalMinutes = d.totalMinutes;
+          durText = `${d.hours} Jam ${d.minutes} Menit`;
+        }
       }
 
-      card.innerHTML = `
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-[#1E3A4C]">${formatDisplayDateShort(r.date)}</span>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#16A34A] border border-emerald-200">
-            ${r.status || 'Hadir'}
-          </span>
+      // Ambil jam masuk sebagai penanda timeline di kiri (Gaya "10 AM" di foto)
+      let timeHourBadge = '--';
+      let timePeriodBadge = '';
+      if (r.clock_in) {
+        const [hStr, mStr] = r.clock_in.split(':');
+        let h = parseInt(hStr, 10);
+        timePeriodBadge = h >= 12 ? 'PM' : 'AM';
+        h = h % 12 || 12;
+        timeHourBadge = String(h);
+      } else {
+        timeHourBadge = '07';
+        timePeriodBadge = 'AM';
+      }
+
+      // Tentukan tema warna kartu 2 layer berdasarkan status
+      // Hadir = Deep Teal / Ocean Blue (#1E3A4C / #2C556E)
+      // Terlambat = Warm Orange / Caramel Coral (#E88D67 / #D97750)
+      // Izin / Sakit = Warm Peach / Vanilla Gold (#F3B562 / #E6A045)
+      let status = r.status || 'Hadir';
+      let cardBg = '';
+      let pillBg = '';
+      let iconBg = '';
+      let statusTitle = '';
+      let statusDesc = '';
+      let iconName = '';
+
+      if (status === 'Terlambat') {
+        cardBg = 'bg-[#E88D67] text-white';
+        pillBg = 'bg-[#F2A385] text-white';
+        iconBg = 'bg-white text-[#E88D67]';
+        statusTitle = 'Terlambat Masuk';
+        statusDesc = `${formatDisplayDateShort(r.date)} • Masuk ${formatTimeAmPm(r.clock_in)}`;
+        iconName = 'alert-circle';
+      } else if (status === 'Izin' || status === 'Sakit') {
+        cardBg = 'bg-[#EAA867] text-white';
+        pillBg = 'bg-[#F5BF8A] text-white';
+        iconBg = 'bg-white text-[#EAA867]';
+        statusTitle = status === 'Sakit' ? 'Sakit (Izin Dokter)' : 'Izin Tidak Masuk';
+        statusDesc = r.notes ? r.notes : `${formatDisplayDateShort(r.date)} • Surat izin tercatat`;
+        iconName = status === 'Sakit' ? 'heart-pulse' : 'file-text';
+      } else if (status === 'Alpa') {
+        cardBg = 'bg-[#D9534F] text-white';
+        pillBg = 'bg-[#E57370] text-white';
+        iconBg = 'bg-white text-[#D9534F]';
+        statusTitle = 'Tidak Hadir (Alpa)';
+        statusDesc = `${formatDisplayDateShort(r.date)} • Tanpa keterangan`;
+        iconName = 'x-circle';
+      } else {
+        // Hadir normal (Teal / Ocean Blue seperti kartu kedua di foto)
+        cardBg = 'bg-[#245068] text-white';
+        pillBg = 'bg-[#356B89] text-white';
+        iconBg = 'bg-white text-[#245068]';
+        statusTitle = 'Kehadiran Tercatat (Hadir)';
+        statusDesc = `${formatDisplayDateShort(r.date)} • Masuk ${formatTimeAmPm(r.clock_in)} - Pulang ${r.clock_out ? formatTimeAmPm(r.clock_out) : 'Selesai'}`;
+        iconName = 'check';
+      }
+
+      const row = document.createElement('div');
+      row.className = 'flex items-start gap-3 py-1.5 animate-pop-in';
+
+      row.innerHTML = `
+        <!-- Timeline Hour Label (Kiri: Gaya 10 AM di foto) -->
+        <div class="w-12 pt-1 text-right flex-shrink-0">
+          <span class="text-xl font-extrabold text-[#1E3A4C] font-mono leading-none block">${timeHourBadge}</span>
+          <span class="text-[10px] font-bold text-[#6A8696] uppercase font-mono block tracking-wider">${timePeriodBadge}</span>
         </div>
-        <div class="grid grid-cols-3 gap-2 text-xs pt-1">
-          <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#6A8696] block">Masuk</span>
-            <span class="font-bold text-[#1E3A4C] font-mono">${formatTimeAmPm(r.clock_in)}</span>
+
+        <!-- 2-Tier Schedule Card (Kanan: Gaya Kartu di foto) -->
+        <div class="flex-1 ${cardBg} rounded-3xl p-4 shadow-sm space-y-3 relative overflow-hidden transition hover:scale-[1.01]">
+          <!-- Top Card Section -->
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <h4 class="text-sm font-extrabold tracking-tight text-white leading-snug">${statusTitle}</h4>
+              <p class="text-[11px] text-white/85 font-medium mt-0.5">${statusDesc}</p>
+            </div>
+            <div class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white/90 flex-shrink-0 cursor-pointer">
+              <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+            </div>
           </div>
-          <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#6A8696] block">Pulang</span>
-            <span class="font-bold text-[#1E3A4C] font-mono">${r.clock_out ? formatTimeAmPm(r.clock_out) : '-'}</span>
-          </div>
-          <div class="p-2 rounded-xl bg-slate-50">
-            <span class="text-[10px] text-[#6A8696] block">Durasi</span>
-            <span class="font-bold text-[#6CB1C9]">${durText}</span>
+
+          <!-- Bottom Pill Segment (Dua Tingkat Warna) -->
+          <div class="${pillBg} -mx-1 -mb-1 px-3.5 py-2.5 rounded-2xl flex items-center justify-between text-xs">
+            <div class="flex items-center gap-1.5 font-bold">
+              <i data-lucide="clock" class="w-3.5 h-3.5 opacity-90"></i>
+              <span>${durText !== '-' ? durText : (r.clock_in ? 'Sedang bekerja' : '0 Jam')}</span>
+            </div>
+            
+            <!-- Round Action / Status Icon in Bottom Right -->
+            <div class="w-7 h-7 rounded-full ${iconBg} flex items-center justify-center shadow-xs flex-shrink-0">
+              <i data-lucide="${iconName}" class="w-3.5 h-3.5"></i>
+            </div>
           </div>
         </div>
       `;
 
-      historyListContainer.appendChild(card);
+      historyListContainer.appendChild(row);
     });
 
     if (window.lucide) window.lucide.createIcons();
   };
-
   prevMonthBtn.addEventListener('click', () => {
     currentHistoryPeriod.setMonth(currentHistoryPeriod.getMonth() - 1);
     renderMonthlyCalculations();
@@ -2204,5 +2350,6 @@
 
   init();
 })();
+
 
 

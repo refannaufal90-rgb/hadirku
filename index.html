@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -87,7 +87,7 @@
           </div>
         </div>
         <!-- Floating Heart Accent -->
-        <div class="absolute top-3 right-5 text-rose-400 animate-pulse text-lg">❤️</div>
+        <div class="absolute top-3 right-5 text-rose-400 animate-pulse text-lg">â¤ï¸</div>
         <!-- Leaves SVG In Front -->
         <svg class="absolute bottom-0 w-36 h-28 pointer-events-none" viewBox="0 0 160 120" fill="none">
           <path d="M40 110C30 70 55 35 85 45C95 65 75 105 40 110Z" fill="#6CB1C9"/>
@@ -243,7 +243,7 @@
             <span id="greetingTimeWord" class="text-[11px] font-bold text-[#6A8696] uppercase tracking-wider block">Selamat Pagi,</span>
             <h2 id="greetingNameDisplay" class="text-lg font-extrabold leading-tight text-[#1E3A4C] flex items-center gap-1.5">
               <span>John Doe</span>
-              <span class="text-xs text-[#FFDEAA]">✨</span>
+              <span class="text-xs text-[#FFDEAA]">âœ¨</span>
             </h2>
             <p id="greetingSubQuote" class="text-xs text-[#6CB1C9] font-semibold mt-0.5">You're doing well</p>
           </div>
@@ -406,40 +406,43 @@
         </div>
       </div>
 
-      <!-- 04. KALENDER MINGGUAN (Senin s/d Minggu) -->
-      <div class="hadirku-card p-4 space-y-2.5">
+      <!-- 04. KALENDER MINGGUAN (Gaya Kapsul Oval & Bulat Sesuai Foto) -->
+      <div class="hadirku-card p-4 space-y-3 border border-[#E2ECF0]">
         <div class="flex items-center justify-between text-xs">
-          <span class="font-bold text-[#1E3A4C]">Kalender Mingguan</span>
-          <span id="weekRangeLabel" class="text-[11px] text-[#6A8696] font-medium">12 - 18 Oktober 2026</span>
+          <div class="flex items-center gap-1.5 font-bold text-[#1E3A4C]">
+            <i data-lucide="calendar" class="w-4 h-4 text-[#6CB1C9]"></i>
+            <span id="weekRangeLabel" class="text-xs font-bold text-[#1E3A4C]">12 - 18 Oktober 2026</span>
+          </div>
+          <span class="text-[10px] font-semibold text-[#6A8696] bg-[#E8F5F9] px-2.5 py-1 rounded-full">Minggu Ini</span>
         </div>
 
-        <!-- 7 Days Grid -->
-        <div id="weeklyCalendarGrid" class="grid grid-cols-7 gap-1 text-center pt-1">
+        <!-- 7 Days Pill Strip Container -->
+        <div id="weeklyCalendarGrid" class="flex items-center justify-between gap-1.5 pt-1 overflow-x-auto pb-1">
           <!-- Rendered dynamically by app.js -->
         </div>
       </div>
 
-      <!-- 05. TARGET TASK HARI INI -->
-      <div class="hadirku-card p-5 space-y-3.5">
+      <!-- 05. DAILY ROUTINE / TARGET TASK HARI INI (Gaya Gambar Budi: Stepper Line & Squircle Cards) -->
+      <div class="hadirku-card p-5 space-y-4 border border-[#E2ECF0]">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="text-sm font-bold text-[#1E3A4C]">Target Task Hari Ini</h3>
-            <span id="homeTaskProgressCount" class="text-xs text-[#6A8696]">0 dari 0 tugas selesai</span>
+            <h3 class="text-base font-extrabold text-[#1E3A4C]">Task hari ini</h3>
+            <span id="homeTaskProgressCount" class="text-xs text-[#6A8696] font-medium">0 dari 0 tugas selesai</span>
           </div>
-          <button id="homeViewAllTasksLink" type="button" class="text-xs font-bold text-[#6CB1C9] hover:underline flex items-center gap-0.5">
-            <span>Lihat Semua</span>
+          <button id="homeViewAllTasksLink" type="button" class="text-xs font-bold text-[#6CB1C9] hover:underline flex items-center gap-1">
+            <span>See all</span>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
           </button>
         </div>
 
-        <!-- Progress Bar (Teal) -->
-        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-          <div id="homeTaskProgressBar" class="bg-[#86C7DE] h-full w-0 transition-all duration-300"></div>
+        <!-- Progress Bar -->
+        <div class="w-full bg-[#E8F5F9] h-2 rounded-full overflow-hidden">
+          <div id="homeTaskProgressBar" class="bg-[#6CB1C9] h-full w-0 transition-all duration-300"></div>
         </div>
 
-        <!-- 3 Tasks Preview -->
-        <div id="homeTaskListPreview" class="space-y-2 pt-1">
-          <!-- Rendered dynamically by app.js -->
+        <!-- Stepper Timeline Routine Tasks Preview -->
+        <div id="homeTaskListPreview" class="space-y-3 pt-1">
+          <!-- Rendered dynamically by app.js with stepper line -->
         </div>
       </div>
 
@@ -532,23 +535,23 @@
         </button>
       </div>
 
-      <!-- Summary Badges in History -->
+      <!-- Summary Badges in History (Warna Noguchi Blue Sesuai Gambar) -->
       <div class="grid grid-cols-4 gap-2 text-center text-xs">
-        <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#6A8696] block font-semibold">Hadir</span>
-          <span id="histHadirCount" class="text-base font-extrabold text-[#16A34A] block mt-0.5">0</span>
+        <div class="hadirku-card p-2.5 bg-[#E8F5F9]/80 border-[#6CB1C9]/30">
+          <span class="text-[10px] text-[#388CA7] block font-bold">Hadir</span>
+          <span id="histHadirCount" class="text-base font-extrabold text-[#1E3A4C] block mt-0.5">0</span>
         </div>
-        <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#6A8696] block font-semibold">Terlambat</span>
-          <span id="histTerlambatCount" class="text-base font-extrabold text-[#F59E0B] block mt-0.5">0</span>
+        <div class="hadirku-card p-2.5 bg-[#FFF6E5] border-[#FFE6BC]">
+          <span class="text-[10px] text-[#B57F26] block font-bold">Terlambat</span>
+          <span id="histTerlambatCount" class="text-base font-extrabold text-[#B57F26] block mt-0.5">0</span>
         </div>
-        <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#6A8696] block font-semibold">Izin</span>
-          <span id="histIzinCount" class="text-base font-extrabold text-[#0284C7] block mt-0.5">0</span>
+        <div class="hadirku-card p-2.5 bg-[#F6EEF8] border-[#EADAF0]">
+          <span class="text-[10px] text-[#7C5295] block font-bold">Izin</span>
+          <span id="histIzinCount" class="text-base font-extrabold text-[#7C5295] block mt-0.5">0</span>
         </div>
-        <div class="hadirku-card p-2.5">
-          <span class="text-[10px] text-[#6A8696] block font-semibold">Alpa</span>
-          <span id="histAlpaCount" class="text-base font-extrabold text-[#DC2626] block mt-0.5">0</span>
+        <div class="hadirku-card p-2.5 bg-[#FDEEEE] border-[#F8D2D2]">
+          <span class="text-[10px] text-[#D9534F] block font-bold">Alpa</span>
+          <span id="histAlpaCount" class="text-base font-extrabold text-[#D9534F] block mt-0.5">0</span>
         </div>
       </div>
 
@@ -590,63 +593,125 @@
       </div>
 
       <!-- WIDGET PRODUKTIVITAS: POMODORO & WATER TRACKER -->
-      <div class="grid grid-cols-2 gap-3">
-        <!-- 1. Pomodoro Focus Timer Card -->
-        <div class="hadirku-card p-3.5 flex flex-col justify-between space-y-2.5 relative overflow-hidden">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5 text-xs font-bold text-[#1E3A4C]">
-              <span class="text-base">🍅</span>
-              <span>Pomodoro</span>
+      <!-- WIDGET PRODUKTIVITAS: POMODORO GAYA GAMBAR & WATER TRACKER -->
+      <div class="space-y-3">
+        <!-- 1. Pomodoro Focus Timer Card (Persis Foto: Maskot Membaca Buku + Headphone) -->
+        <div class="hadirku-card p-5 relative overflow-hidden bg-gradient-to-b from-[#EBF5F8] to-[#FFFFFF] border border-[#E2ECF0] shadow-sm">
+          <!-- Background Nature & Clouds Accent -->
+          <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#E2ECF0]/60 blur-xl pointer-events-none"></div>
+          <div class="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#FFF6E5]/70 blur-lg pointer-events-none"></div>
+
+          <!-- Cute Mascot: Sun with Red Headphones reading book -->
+          <div class="relative flex flex-col items-center justify-center pt-1 pb-3">
+            <!-- Music Notes floating -->
+            <div class="text-[10px] text-[#6A8696] font-mono tracking-widest mb-0.5 animate-bounce">? ? ?</div>
+
+            <div class="relative w-28 h-24 flex items-center justify-center">
+              <!-- Background Leaves -->
+              <svg class="absolute -top-2 w-32 h-20 pointer-events-none opacity-85" viewBox="0 0 140 80" fill="none">
+                <path d="M40 70C25 40 30 15 50 10C65 25 55 55 40 70Z" fill="#86C7DE"/>
+                <path d="M100 70C115 40 110 15 90 10C75 25 85 55 100 70Z" fill="#86C7DE"/>
+                <path d="M70 70C55 35 60 10 75 5C88 20 80 50 70 70Z" fill="#6CB1C9"/>
+              </svg>
+
+              <!-- Sun Body (Yellow) -->
+              <div class="w-16 h-16 rounded-full bg-[#FFDEAA] border-2 border-[#EAA867]/40 flex items-center justify-center relative shadow-md shadow-[#FFDEAA]/40">
+                <!-- Cute Face -->
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#1E3A4C]"></span>
+                  <span class="w-1 h-0.5 rounded-full bg-[#E88D67]"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#1E3A4C]"></span>
+                </div>
+                <!-- Cute Blush -->
+                <div class="absolute w-2 h-1 rounded-full bg-[#E88D67]/40 left-3 top-9"></div>
+                <div class="absolute w-2 h-1 rounded-full bg-[#E88D67]/40 right-3 top-9"></div>
+              </div>
+
+              <!-- Red Headphone Arc & Earcups -->
+              <div class="absolute -top-1 w-18 h-18 pointer-events-none">
+                <div class="w-16 h-8 border-4 border-[#E88D67] border-b-0 rounded-t-full mx-auto"></div>
+                <div class="w-3.5 h-5 rounded-full bg-[#E88D67] absolute top-6 left-5 shadow-xs"></div>
+                <div class="w-3.5 h-5 rounded-full bg-[#E88D67] absolute top-6 right-5 shadow-xs"></div>
+              </div>
+
+              <!-- Open Book in Front -->
+              <div class="absolute -bottom-1 z-10">
+                <svg class="w-12 h-8" viewBox="0 0 60 40" fill="none">
+                  <path d="M30 10C20 6 10 8 4 12V32C10 28 20 26 30 30V10Z" fill="#86C7DE"/>
+                  <path d="M30 10C40 6 50 8 56 12V32C50 28 40 26 30 30V10Z" fill="#BFE3EE"/>
+                  <line x1="30" y1="10" x2="30" y2="30" stroke="#1E3A4C" stroke-width="1.5"/>
+                  <line x1="30" y1="12" x2="33" y2="28" stroke="#E88D67" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
             </div>
-            <span id="pomoModeBadge" class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200">Fokus 25m</span>
           </div>
 
-          <!-- Timer Display -->
-          <div class="text-center py-1">
-            <span id="pomoTimerText" class="text-2xl font-extrabold text-[#1E3A4C] font-mono tracking-tight">25:00</span>
+          <!-- Inner White Modal Card (Persis Gambar) -->
+          <div class="bg-white rounded-3xl p-5 shadow-sm border border-[#E2ECF0] space-y-4">
+            <!-- Focus vs Break Pill Selector -->
+            <div class="flex items-center justify-center p-1 rounded-2xl bg-[#E8F5F9] max-w-[220px] mx-auto text-xs font-bold">
+              <button id="pomoSelectFocusBtn" type="button" class="flex-1 py-1.5 px-3 rounded-xl bg-[#6CB1C9] text-white shadow-xs transition">Focus</button>
+              <button id="pomoSelectBreakBtn" type="button" class="flex-1 py-1.5 px-3 rounded-xl text-[#6A8696] hover:text-[#1E3A4C] transition">Break</button>
+            </div>
+
+            <!-- Big Timer Display (Gaya 06:24 di foto) -->
+            <div class="text-center py-1">
+              <span id="pomoTimerText" class="text-4xl sm:text-5xl font-black text-[#1E3A4C] font-mono tracking-tight block">25:00</span>
+              <span id="pomoModeBadge" class="hidden">Fokus 25m</span>
+            </div>
+
+            <!-- Action Controls: Pause Pill & Finish Button -->
+            <div class="flex items-center gap-2 pt-1">
+              <!-- Small Pause/Play Pill -->
+              <button id="pomoStartPauseBtn" type="button" class="w-14 h-12 rounded-2xl border-2 border-[#1E3A4C] text-[#1E3A4C] hover:bg-[#F0F5F7] flex items-center justify-center active:scale-95 transition" title="Mulai / Jeda">
+                <span id="pomoPlayText" class="hidden">Mulai</span>
+                <i id="pomoPlayIcon" data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+
+              <!-- Big Finish / Reset Button -->
+              <button id="pomoResetBtn" type="button" class="flex-1 h-12 rounded-2xl bg-[#6CB1C9] hover:bg-[#5AA1B9] text-white font-extrabold text-sm shadow-md shadow-[#6CB1C9]/25 flex items-center justify-center gap-2 active:scale-[0.98] transition">
+                <span>??</span>
+                <span>Finish</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Controls -->
-          <div class="flex items-center justify-center gap-1.5 pt-1 border-t border-slate-100">
-            <button id="pomoStartPauseBtn" type="button" class="flex-1 py-1.5 px-2 rounded-xl bg-[#6CB1C9] text-white text-xs font-bold shadow-sm hover:bg-[#0D9488] active:scale-95 transition flex items-center justify-center gap-1">
-              <i id="pomoPlayIcon" data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-              <span id="pomoPlayText">Mulai</span>
-            </button>
-            <button id="pomoResetBtn" type="button" class="py-1.5 px-2.5 rounded-xl bg-slate-100 text-[#6A8696] hover:text-[#1E3A4C] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
-              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            </button>
+          <!-- Bottom Active Task Slot with Dotted Tomato (Persis Gambar) -->
+          <div class="mt-3 p-3.5 rounded-2xl bg-white border border-[#E2ECF0] flex items-center gap-3 shadow-2xs">
+            <div class="w-8 h-8 rounded-full border-2 border-dashed border-[#E88D67] flex items-center justify-center flex-shrink-0 text-sm">
+              ??
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <span id="pomoActiveTaskTitle" class="text-xs font-bold text-[#1E3A4C] block truncate">Selesaikan Target Kerja Hari Ini</span>
+              <span class="text-[10px] text-[#6A8696] block">Sesi fokus produktif terhubung</span>
+            </div>
           </div>
         </div>
 
-        <!-- 2. Water Tracker Card -->
-        <div class="hadirku-card p-3.5 flex flex-col justify-between space-y-2.5 relative overflow-hidden">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5 text-xs font-bold text-[#1E3A4C]">
-              <span class="text-base">💧</span>
-              <span>Air Minum</span>
+        <!-- 2. Water Tracker Card (Dibuat Rapi & Sejajar) -->
+        <div class="hadirku-card p-4 flex items-center justify-between gap-3 border border-[#E2ECF0]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-[#E8F5F9] text-[#6CB1C9] flex items-center justify-center font-bold text-lg flex-shrink-0">
+              ??
             </div>
-            <span id="waterMlText" class="text-[10px] font-extrabold text-sky-600 font-mono">0/2000 ml</span>
-          </div>
-
-          <!-- Glass Tracker Display -->
-          <div class="text-center py-0.5">
-            <div class="flex items-baseline justify-center gap-1">
-              <span id="waterGlassesCount" class="text-2xl font-extrabold text-[#1E3A4C] font-mono">0</span>
-              <span class="text-xs text-[#6A8696] font-semibold">/ 8 gelas</span>
-            </div>
-            <!-- Mini Progress Bar -->
-            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1.5">
-              <div id="waterProgressBar" class="bg-sky-500 h-full w-0 transition-all duration-300"></div>
+            <div>
+              <div class="flex items-baseline gap-1.5">
+                <span id="waterGlassesCount" class="text-base font-extrabold text-[#1E3A4C] font-mono">0</span>
+                <span class="text-xs text-[#6A8696]">/ 8 gelas</span>
+                <span id="waterMlText" class="text-[10px] text-[#6CB1C9] font-bold font-mono ml-1">(0/2000 ml)</span>
+              </div>
+              <div class="w-32 bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1">
+                <div id="waterProgressBar" class="bg-[#6CB1C9] h-full w-0 transition-all duration-300"></div>
+              </div>
             </div>
           </div>
 
-          <!-- Controls -->
-          <div class="flex items-center justify-center gap-1.5 pt-1 border-t border-slate-100">
-            <button id="addWaterBtn" type="button" class="flex-1 py-1.5 px-2 rounded-xl bg-sky-500 text-white text-xs font-bold shadow-sm hover:bg-sky-600 active:scale-95 transition flex items-center justify-center gap-1">
+          <div class="flex items-center gap-1.5">
+            <button id="addWaterBtn" type="button" class="py-2 px-3 rounded-xl bg-[#6CB1C9] hover:bg-[#5AA1B9] text-white text-xs font-bold shadow-xs active:scale-95 transition flex items-center gap-1">
               <i data-lucide="plus" class="w-3.5 h-3.5"></i>
               <span>+1 Gelas</span>
             </button>
-            <button id="resetWaterBtn" type="button" class="py-1.5 px-2 rounded-xl bg-slate-100 text-[#6A8696] hover:text-[#1E3A4C] hover:bg-slate-200 text-xs font-bold transition active:scale-95" title="Reset">
+            <button id="resetWaterBtn" type="button" class="p-2 rounded-xl bg-slate-100 text-[#6A8696] hover:text-[#1E3A4C] text-xs transition" title="Reset">
               <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             </button>
           </div>
@@ -1131,9 +1196,9 @@
           <div>
             <label for="modalTaskPriority" class="block text-xs font-semibold text-[#1E3A4C] mb-1">Prioritas:</label>
             <select id="modalTaskPriority" class="w-full bg-slate-50 border border-[#E2ECF0] rounded-xl px-3 py-2 text-xs text-[#1E3A4C] focus:outline-none focus:ring-2 focus:ring-[#6CB1C9]">
-              <option value="Sedang">🟡 Sedang</option>
-              <option value="Tinggi">🔴 Tinggi</option>
-              <option value="Rendah">🔵 Rendah</option>
+              <option value="Sedang">ðŸŸ¡ Sedang</option>
+              <option value="Tinggi">ðŸ”´ Tinggi</option>
+              <option value="Rendah">ðŸ”µ Rendah</option>
             </select>
           </div>
         </div>
@@ -1222,11 +1287,11 @@
           <div class="grid grid-cols-2 gap-2">
             <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer has-[:checked]:border-[#6CB1C9] has-[:checked]:bg-teal-50">
               <input type="radio" name="izinType" value="Izin" checked class="accent-[#6CB1C9]" />
-              <span class="font-bold text-[#1E3A4C]">📋 Izin</span>
+              <span class="font-bold text-[#1E3A4C]">ðŸ“‹ Izin</span>
             </label>
             <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50">
               <input type="radio" name="izinType" value="Sakit" class="accent-rose-600" />
-              <span class="font-bold text-[#1E3A4C]">🩺 Sakit</span>
+              <span class="font-bold text-[#1E3A4C]">ðŸ©º Sakit</span>
             </label>
           </div>
         </div>
